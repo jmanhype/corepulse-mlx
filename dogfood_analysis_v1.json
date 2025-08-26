@@ -1,0 +1,301 @@
+{
+  "analyses": [
+    {
+      "files": {
+        "generated": "/Users/speed/Downloads/corpus-mlx/corepulse_mlx_watch.png",
+        "reference": "/Users/speed/Downloads/corpus-mlx/test_product_watch.png",
+        "prompt": "luxury smartwatch on a modern glass desk in a bright office"
+      },
+      "generation_stats": {
+        "generation_time": 8.15,
+        "peak_memory": 11.63,
+        "steps": 4,
+        "cfg": 1.5
+      },
+      "quality_analysis": {
+        "overall_quality_score": 0.5339246232859441,
+        "sharpness": {
+          "score": 1.0,
+          "assessment": "excellent"
+        },
+        "color_vibrancy": {
+          "score": 0.07653428002213161,
+          "assessment": "dull"
+        },
+        "contrast": {
+          "score": 0.5252395898357007,
+          "assessment": "low"
+        },
+        "noise_level": {
+          "score": 0.7363503235334522,
+          "assessment": "slight_noise"
+        }
+      },
+      "product_preservation": {
+        "overall_preservation_score": 0.5010692902280409,
+        "structure_similarity": {
+          "score": 0.5,
+          "assessment": "poor"
+        },
+        "color_preservation": {
+          "score": 0.5,
+          "assessment": "changed"
+        },
+        "shape_preservation": {
+          "score": 0.5032078706841229,
+          "assessment": "partially_maintained"
+        }
+      },
+      "hallucination_check": {
+        "hallucination_free_score": 0.8625,
+        "unexpected_objects": {
+          "severity": 0.2,
+          "detected": false
+        },
+        "duplicate_products": {
+          "severity": 0.1,
+          "detected": false
+        },
+        "distorted_features": {
+          "severity": 0.15,
+          "detected": false
+        },
+        "background_contamination": {
+          "severity": 0.1,
+          "detected": false
+        }
+      },
+      "composition_analysis": {
+        "overall_composition_score": 0.6528059940547599,
+        "product_prominence": {
+          "score": 0.75,
+          "assessment": "prominent"
+        },
+        "lighting_quality": {
+          "score": 0.5272993529330956,
+          "assessment": "poor"
+        },
+        "scene_coherence": {
+          "score": 0.8,
+          "assessment": "coherent"
+        },
+        "professional_appeal": {
+          "score": 0.5339246232859441,
+          "assessment": "amateur"
+        }
+      },
+      "improvement_priority": [
+        {
+          "aspect": "product_preservation",
+          "priority": "high",
+          "score": 0.6,
+          "target": 0.9
+        },
+        {
+          "aspect": "hallucination_prevention",
+          "priority": "critical",
+          "score": 0.7,
+          "target": 0.95
+        },
+        {
+          "aspect": "image_quality",
+          "priority": "medium",
+          "score": 0.8,
+          "target": 0.9
+        },
+        {
+          "aspect": "composition",
+          "priority": "low",
+          "score": 0.85,
+          "target": 0.9
+        }
+      ],
+      "recommendations": [
+        "Adjust CFG weight from 1.5 to 2.0-3.0 for more vibrant colors",
+        "Strengthen product structure preservation in CorePulse injection",
+        "Implement color-specific preservation masks",
+        "Add shape-aware edge preservation to product masks",
+        "Add professional lighting keywords to enhancement prompts",
+        "Include commercial photography style modifiers"
+      ]
+    },
+    {
+      "files": {
+        "generated": "/Users/speed/Downloads/corpus-mlx/corepulse_mlx_headphones.png",
+        "reference": "/Users/speed/Downloads/corpus-mlx/test_product_headphones.png",
+        "prompt": "premium gaming headphones on a wooden studio table with warm lighting"
+      },
+      "generation_stats": {
+        "generation_time": 8.0,
+        "peak_memory": 11.63,
+        "steps": 4,
+        "cfg": 1.5
+      },
+      "quality_analysis": {
+        "overall_quality_score": 0.38005676857128745,
+        "sharpness": {
+          "score": 0.6059117424162938,
+          "assessment": "good"
+        },
+        "color_vibrancy": {
+          "score": 0.15722423496330762,
+          "assessment": "dull"
+        },
+        "contrast": {
+          "score": 0.3770343283342609,
+          "assessment": "low"
+        },
+        "noise_level": {
+          "score": 0.8107435528361358,
+          "assessment": "clean"
+        }
+      },
+      "product_preservation": {
+        "overall_preservation_score": 0.4954635231074443,
+        "structure_similarity": {
+          "score": 0.49415093750427663,
+          "assessment": "poor"
+        },
+        "color_preservation": {
+          "score": 0.49271071667198973,
+          "assessment": "changed"
+        },
+        "shape_preservation": {
+          "score": 0.49952891514606657,
+          "assessment": "distorted"
+        }
+      },
+      "hallucination_check": {
+        "hallucination_free_score": 0.8625,
+        "unexpected_objects": {
+          "severity": 0.2,
+          "detected": false
+        },
+        "duplicate_products": {
+          "severity": 0.1,
+          "detected": false
+        },
+        "distorted_features": {
+          "severity": 0.15,
+          "detected": false
+        },
+        "background_contamination": {
+          "severity": 0.1,
+          "detected": false
+        }
+      },
+      "composition_analysis": {
+        "overall_composition_score": 0.577142415724754,
+        "product_prominence": {
+          "score": 0.75,
+          "assessment": "prominent"
+        },
+        "lighting_quality": {
+          "score": 0.3785128943277286,
+          "assessment": "poor"
+        },
+        "scene_coherence": {
+          "score": 0.8,
+          "assessment": "coherent"
+        },
+        "professional_appeal": {
+          "score": 0.3800567685712874,
+          "assessment": "amateur"
+        }
+      },
+      "improvement_priority": [
+        {
+          "aspect": "product_preservation",
+          "priority": "high",
+          "score": 0.6,
+          "target": 0.9
+        },
+        {
+          "aspect": "hallucination_prevention",
+          "priority": "critical",
+          "score": 0.7,
+          "target": 0.95
+        },
+        {
+          "aspect": "image_quality",
+          "priority": "medium",
+          "score": 0.8,
+          "target": 0.9
+        },
+        {
+          "aspect": "composition",
+          "priority": "low",
+          "score": 0.85,
+          "target": 0.9
+        }
+      ],
+      "recommendations": [
+        "Increase SDXL steps from 4 to 6-8 for better sharpness",
+        "Adjust CFG weight from 1.5 to 2.0-3.0 for more vibrant colors",
+        "Strengthen product structure preservation in CorePulse injection",
+        "Implement color-specific preservation masks",
+        "Add shape-aware edge preservation to product masks",
+        "Add professional lighting keywords to enhancement prompts",
+        "Include commercial photography style modifiers"
+      ]
+    }
+  ],
+  "improvement_plan": {
+    "current_performance": {
+      "overall_success_rate": "0.0%",
+      "successful_generations": "0/2",
+      "average_scores": {
+        "quality": "0.457",
+        "preservation": "0.498",
+        "hallucination_free": "0.863",
+        "composition": "0.615"
+      },
+      "target_success_rate": "100%"
+    },
+    "priority_improvements": [
+      {
+        "recommendation": "Adjust CFG weight from 1.5 to 2.0-3.0 for more vibrant colors",
+        "frequency": 2,
+        "priority": "high"
+      },
+      {
+        "recommendation": "Strengthen product structure preservation in CorePulse injection",
+        "frequency": 2,
+        "priority": "high"
+      },
+      {
+        "recommendation": "Implement color-specific preservation masks",
+        "frequency": 2,
+        "priority": "high"
+      },
+      {
+        "recommendation": "Add shape-aware edge preservation to product masks",
+        "frequency": 2,
+        "priority": "high"
+      },
+      {
+        "recommendation": "Add professional lighting keywords to enhancement prompts",
+        "frequency": 2,
+        "priority": "high"
+      },
+      {
+        "recommendation": "Include commercial photography style modifiers",
+        "frequency": 2,
+        "priority": "high"
+      },
+      {
+        "recommendation": "Increase SDXL steps from 4 to 6-8 for better sharpness",
+        "frequency": 1,
+        "priority": "high"
+      }
+    ],
+    "next_iteration_config": {
+      "steps": 6,
+      "cfg_weight": 2.5,
+      "injection_strength": 0.85,
+      "preservation_threshold": 0.9,
+      "spatial_control_weight": 1.5
+    },
+    "timestamp": "2025-08-25T11:40:46.330631"
+  }
+}

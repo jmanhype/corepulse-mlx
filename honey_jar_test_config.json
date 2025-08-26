@@ -1,0 +1,54 @@
+{
+  "reference_image": "/Users/speed/Downloads/corpus-mlx/honey_jar_arganadise.png",
+  "original_webp": "/Users/speed/Downloads/corpus-mlx/is-reflection-standard-for-white-background-product-v0-qnvgwnp4gmpc1.webp",
+  "product_name": "ARGANADISE Carob Honey",
+  "test_scenarios": [
+    {
+      "id": "kitchen_hold",
+      "prompt": "elegant woman's manicured hand holding premium ARGANADISE carob honey jar in bright modern kitchen, morning sunlight streaming through window, marble countertop, product photography",
+      "output": "honey_v3_kitchen_hand.png",
+      "hand_details": "manicured female hand, elegant grip"
+    },
+    {
+      "id": "chef_drizzle",
+      "prompt": "professional chef's hands drizzling golden carob honey from ARGANADISE jar onto gourmet pancakes, restaurant kitchen, shallow depth of field, culinary photography",
+      "output": "honey_v3_chef_drizzle.png",
+      "hand_details": "chef hands in action, drizzling motion"
+    },
+    {
+      "id": "gift_present",
+      "prompt": "two hands presenting ARGANADISE carob honey jar as luxury gift with silk ribbon, cozy living room, warm afternoon light, lifestyle product photography",
+      "output": "honey_v3_gift_hands.png",
+      "hand_details": "two hands, gift presentation pose"
+    },
+    {
+      "id": "market_display",
+      "prompt": "artisan's weathered hands proudly holding ARGANADISE carob honey jar at farmers market, rustic wooden stall, natural outdoor lighting, authentic lifestyle",
+      "output": "honey_v3_market_hands.png",
+      "hand_details": "weathered working hands, proud display"
+    },
+    {
+      "id": "breakfast_scene",
+      "prompt": "hand reaching for ARGANADISE carob honey jar on breakfast table with fresh bread and tea, morning light, homestyle photography, cozy atmosphere",
+      "output": "honey_v3_breakfast_reach.png",
+      "hand_details": "natural reaching gesture"
+    }
+  ],
+  "v3_config": {
+    "steps": 8,
+    "cfg_weight": 3.0,
+    "injection_strength": 0.95,
+    "preservation_threshold": 0.98,
+    "features": [
+      "multi_scale_preservation",
+      "adaptive_strength",
+      "color_histogram_matching",
+      "edge_aware_smoothing",
+      "professional_lighting_templates",
+      "gradient_structure_reinforcement",
+      "dynamic_cfg_scheduling",
+      "sub_pixel_edge_alignment",
+      "professional_post_processing"
+    ]
+  }
+}

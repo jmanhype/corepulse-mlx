@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "tracking_config": {
+    "max_products": 6,
+    "tracking_method": "combined",
+    "parameters": {
+      "association_threshold": 50.0,
+      "velocity_smoothing": 0.3,
+      "confidence_threshold": 0.3,
+      "prediction_weight": 0.7,
+      "size_change_threshold": 0.5,
+      "direction_change_threshold": 45
+    },
+    "quality_thresholds": {
+      "min_track_length": 5,
+      "min_confidence": 0.3,
+      "max_missed_frames": 5,
+      "association_threshold": 50.0
+    }
+  },
+  "video_metadata": {
+    "frame_count": 30,
+    "fps": 30.0,
+    "resolution": [
+      640,
+      480
+    ],
+    "expected_products": 3
+  },
+  "processing_instructions": {
+    "frame_by_frame": true,
+    "save_intermediate": false,
+    "track_histories": true,
+    "quality_metrics": true
+  },
+  "output_format": {
+    "tracks": "json",
+    "visualizations": "png",
+    "metrics": "json"
+  },
+  "deployment_info": {
+    "generated_on": "mac",
+    "algorithm_version": "1.0",
+    "config_hash": "434ab9787655"
+  }
+}

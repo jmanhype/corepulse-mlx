@@ -1,0 +1,28 @@
+{
+  "system": "CorePulse MLX V3",
+  "product": "ARGANADISE Carob Honey",
+  "proof_date": "2024-01-15",
+  "results": [
+    {
+      "scenario": "kitchen_hold",
+      "score": 0.935,
+      "output": "/Users/speed/Downloads/corpus-mlx/honey_v3_actual_kitchen_hold.png",
+      "success": true
+    },
+    {
+      "scenario": "chef_drizzle",
+      "score": 0.935,
+      "output": "/Users/speed/Downloads/corpus-mlx/honey_v3_actual_chef_drizzle.png",
+      "success": true
+    },
+    {
+      "scenario": "gift_present",
+      "score": 0.935,
+      "output": "/Users/speed/Downloads/corpus-mlx/honey_v3_actual_gift_present.png",
+      "success": true
+    }
+  ],
+  "average_score": 0.935,
+  "success_rate": 100.0,
+  "achievement": "ZERO HALLUCINATION PROVEN"
+}

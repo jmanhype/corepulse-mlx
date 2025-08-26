@@ -1,0 +1,188 @@
+{
+  "version": "V4",
+  "target_score": 0.85,
+  "expected_score": 0.95,
+  "modules": {
+    "hand_pipeline": {
+      "name": "Anatomically Correct Hand Generator",
+      "components": [
+        "Hand skeleton constraints",
+        "5-finger enforcement",
+        "Proportion validator",
+        "Skin tone matching",
+        "Gesture physics"
+      ],
+      "expected_improvement": 0.08
+    },
+    "text_preservation": {
+      "name": "Enhanced Text Lock System",
+      "components": [
+        "OCR-based text detection",
+        "Character-level preservation",
+        "Font structure maintenance",
+        "Anti-mirror protection",
+        "Label boundary enforcement"
+      ],
+      "expected_improvement": 0.05
+    },
+    "anti_duplication": {
+      "name": "Single Product Guarantee",
+      "components": [
+        "Instance segmentation",
+        "Duplicate detection network",
+        "Background product suppression",
+        "Focal object reinforcement",
+        "Multi-object penalty"
+      ],
+      "expected_improvement": 0.04
+    },
+    "physics_engine": {
+      "name": "Realistic Physics Simulator",
+      "components": [
+        "Shadow consistency check",
+        "Lighting direction validator",
+        "Perspective correction",
+        "Material property enforcement",
+        "Gravity awareness"
+      ],
+      "expected_improvement": 0.03
+    },
+    "iterative_refinement": {
+      "name": "Multi-Pass Quality Control",
+      "components": [
+        "Initial generation",
+        "Error detection pass",
+        "Targeted correction",
+        "Final polish",
+        "Quality validation"
+      ],
+      "expected_improvement": 0.05
+    }
+  },
+  "implementation_steps": [
+    {
+      "step": 1,
+      "task": "Implement Hand Pipeline",
+      "priority": "Critical",
+      "details": [
+        "Add hand skeleton model",
+        "Enforce anatomical constraints",
+        "Train on hand-object dataset",
+        "Validate finger count"
+      ],
+      "estimated_days": 3
+    },
+    {
+      "step": 2,
+      "task": "Enhance Text Preservation",
+      "priority": "High",
+      "details": [
+        "Integrate OCR detection",
+        "Lock text regions absolutely",
+        "Prevent character morphing",
+        "Test on various fonts"
+      ],
+      "estimated_days": 2
+    },
+    {
+      "step": 3,
+      "task": "Anti-Duplication System",
+      "priority": "High",
+      "details": [
+        "Instance counting network",
+        "Penalize multiple products",
+        "Focus attention mechanism",
+        "Background suppression"
+      ],
+      "estimated_days": 2
+    },
+    {
+      "step": 4,
+      "task": "Physics Validation",
+      "priority": "Medium",
+      "details": [
+        "Shadow direction checker",
+        "Perspective grid overlay",
+        "Material property database",
+        "Lighting consistency"
+      ],
+      "estimated_days": 2
+    },
+    {
+      "step": 5,
+      "task": "Iterative Refinement",
+      "priority": "Medium",
+      "details": [
+        "Error detection model",
+        "Targeted inpainting",
+        "Progressive enhancement",
+        "Quality scoring"
+      ],
+      "estimated_days": 1
+    },
+    {
+      "step": 6,
+      "task": "Integration Testing",
+      "priority": "Critical",
+      "details": [
+        "Test all honey scenarios",
+        "Measure improvement",
+        "Identify remaining issues",
+        "Final optimization"
+      ],
+      "estimated_days": 2
+    }
+  ],
+  "test_plan": {
+    "phase_1": {
+      "name": "Component Testing",
+      "tests": [
+        "Hand generation only (no products)",
+        "Text preservation only",
+        "Anti-duplication only",
+        "Physics validation only"
+      ],
+      "success_criteria": "Each module >80% accurate"
+    },
+    "phase_2": {
+      "name": "Integration Testing",
+      "tests": [
+        "Product + single hand",
+        "Product + text focus",
+        "Product + complex background",
+        "Product + lighting variations"
+      ],
+      "success_criteria": "Combined score >82%"
+    },
+    "phase_3": {
+      "name": "Full Scenario Testing",
+      "tests": [
+        "All 5 honey jar scenarios",
+        "Watch with hand",
+        "Headphones worn",
+        "Multiple product types"
+      ],
+      "success_criteria": "Average >85%, All >80%"
+    },
+    "phase_4": {
+      "name": "Production Validation",
+      "tests": [
+        "100 diverse prompts",
+        "Edge cases",
+        "Stress testing",
+        "Commercial quality check"
+      ],
+      "success_criteria": "95% pass rate at 85% threshold"
+    }
+  },
+  "timeline_days": 12,
+  "realistic_assessment": {
+    "confidence": "Medium",
+    "risks": [
+      "Hand generation complexity",
+      "Training data requirements",
+      "Computational overhead"
+    ],
+    "fallback": "V3.5 with simpler hand poses"
+  }
+}

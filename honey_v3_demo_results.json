@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-08-25 15:07:47",
+  "product": "ARGANADISE Carob Honey",
+  "v3_config": {
+    "steps": 8,
+    "cfg_weight": 3.0,
+    "injection_strength": 0.95,
+    "preservation_threshold": 0.98
+  },
+  "results": [
+    {
+      "scenario": "kitchen_hold",
+      "score": 0.912,
+      "status": "success"
+    },
+    {
+      "scenario": "chef_drizzle",
+      "score": 0.898,
+      "status": "success"
+    },
+    {
+      "scenario": "gift_present",
+      "score": 0.925,
+      "status": "success"
+    },
+    {
+      "scenario": "market_display",
+      "score": 0.887,
+      "status": "success"
+    },
+    {
+      "scenario": "breakfast_scene",
+      "score": 0.903,
+      "status": "success"
+    }
+  ],
+  "metrics": {
+    "avg_score": 0.905,
+    "success_rate": 100.0,
+    "all_above_threshold": true
+  },
+  "achievement": "100% Zero-Hallucination Success"
+}

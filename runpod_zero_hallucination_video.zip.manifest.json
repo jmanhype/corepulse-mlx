@@ -1,0 +1,99 @@
+{
+  "created_at": "2025-08-25T11:00:38.134255",
+  "version": "1.0",
+  "purpose": "Zero-hallucination video product placement for $100k/day ads",
+  "files_included": [
+    "src/corepulse_video_logic.py",
+    "src/product_preservation_logic.py",
+    "src/product_detection_algorithms.py",
+    "src/tracking_algorithms.py",
+    "src/video_campaign_templates.py",
+    "src/performance_prediction_models.py",
+    "src/corepulse_mlx.py",
+    "src/hallucination_free_placement.py",
+    "src/agc_ads_pipeline.py",
+    "src/test_mac_logic_suite.py",
+    "config/test_video_schedule.json",
+    "config/product_preservation_config.json",
+    "config/tracking_schedule.json",
+    "config/campaign_deployment_package.json",
+    "config/performance_analysis_complete.json",
+    "tests/test_mac_logic_suite.py",
+    "tests/mac_logic_test_report.json",
+    "requirements.txt",
+    "Dockerfile",
+    "setup.sh",
+    "runpod_main.py",
+    "README.md",
+    "API_DOCS.md"
+  ],
+  "requirements": {
+    "gpu": {
+      "minimum_vram": "24GB",
+      "recommended_vram": "48GB",
+      "gpu_types": [
+        "RTX 4090",
+        "RTX A6000",
+        "A100",
+        "H100"
+      ]
+    },
+    "system": {
+      "ram": "32GB minimum",
+      "storage": "100GB SSD",
+      "cuda": "11.8+",
+      "python": "3.9+"
+    },
+    "software": {
+      "pytorch": "2.0+",
+      "opencv": "4.8+",
+      "pillow": "10.0+",
+      "numpy": "1.24+",
+      "transformers": "4.30+",
+      "diffusers": "0.20+"
+    },
+    "models": {
+      "wan_2_2": "Required for depth extraction",
+      "stable_diffusion_xl": "Required for V2V generation",
+      "optional_models": [
+        "SAM",
+        "CLIP",
+        "DINOv2"
+      ]
+    }
+  },
+  "deployment_instructions": [
+    "1. Extract package to RunPod workspace",
+    "2. Run: chmod +x setup.sh && ./setup.sh",
+    "3. Install WAN 2.2: git clone https://github.com/kijai/ComfyUI-WarpFusion",
+    "4. Download SDXL models to models/ directory",
+    "5. Test with: python runpod_main.py --test",
+    "6. For production: python runpod_main.py --video input.mp4 --output output/",
+    "7. Monitor GPU usage and adjust batch size if needed",
+    "8. Use provided API endpoints for batch processing"
+  ],
+  "performance_targets": {
+    "processing_speed": {
+      "target": "2 seconds per frame",
+      "acceptable": "5 seconds per frame",
+      "maximum": "10 seconds per frame"
+    },
+    "quality_metrics": {
+      "zero_hallucination_rate": "100%",
+      "temporal_consistency": ">95%",
+      "product_preservation": ">99.9%",
+      "generation_quality": ">90%"
+    },
+    "scalability": {
+      "concurrent_videos": "4-8 depending on GPU",
+      "daily_capacity": "1000+ videos",
+      "memory_efficiency": "<80% GPU memory usage"
+    },
+    "business_metrics": {
+      "cost_per_video": "<$0.50",
+      "profit_margin": ">70%",
+      "scaling_ceiling": "$100k/day operations"
+    }
+  },
+  "package_hash": "f248f41a17e8bb28"
+}

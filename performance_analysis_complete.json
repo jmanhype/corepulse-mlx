@@ -1,0 +1,415 @@
+{
+  "test_video_metrics": {
+    "duration": 15.0,
+    "has_product_close_up": true,
+    "has_text_overlay": true,
+    "has_motion": true,
+    "color_diversity": 0.7,
+    "brightness_level": 0.6,
+    "contrast_level": 0.8,
+    "face_present": false,
+    "product_screen_time": 0.6,
+    "hook_strength": 0.85,
+    "cta_clarity": 0.9
+  },
+  "test_campaign_metrics": {
+    "budget": 5000.0,
+    "target_audience_size": 5000000,
+    "competition_level": 0.4,
+    "seasonal_factor": 1.2,
+    "brand_recognition": 0.3,
+    "product_price_point": "mid",
+    "previous_campaign_ctr": 3.2
+  },
+  "platform_results": [
+    {
+      "platform": "instagram_reels",
+      "demographic": "gen_z",
+      "result": {
+        "performance_predictions": {
+          "ctr": {
+            "predicted_ctr": 151.39662048,
+            "confidence_min": 121.117296384,
+            "confidence_max": 15.0,
+            "confidence_level": 0.8,
+            "base_score": 0.6255000000000001,
+            "platform_multiplier": 1.45,
+            "demographic_multiplier": 1.8,
+            "campaign_factors": {
+              "competition": 0.84,
+              "seasonal": 1.2,
+              "brand": 0.92
+            }
+          },
+          "conversion_rate": {
+            "predicted_conversion_rate": 93.7125,
+            "confidence_min": 70.28437500000001,
+            "confidence_max": 25.0,
+            "base_factors": {
+              "product_clarity": 1.0,
+              "cta_clarity": 0.9,
+              "trust_building": 1.0,
+              "value_demonstration": 0.6
+            },
+            "platform_multiplier": 0.85,
+            "trust_multiplier": 1.5,
+            "price_multiplier": 1.0,
+            "brand_factor": 0.84
+          },
+          "costs": {
+            "predicted_cpm": 10.2672,
+            "predicted_cpc": 0.006781657323292981,
+            "predicted_cpa": 0.0072366624765031135,
+            "required_roas": 3.3333333333333335,
+            "break_even_price": 0.02412220825501038,
+            "cost_factors": {
+              "base_cpm": 6.9,
+              "competition_multiplier": 1.24,
+              "seasonal_multiplier": 1.2
+            }
+          },
+          "scaling": {
+            "scaling_category": "high",
+            "overall_score": 0.6849999999999999,
+            "daily_revenue_potential": [
+              10000,
+              50000
+            ],
+            "content_score": 0.7,
+            "market_score": 0.5,
+            "performance_score": 0.85,
+            "engagement_score": 0.76,
+            "scaling_factors": {
+              "hook": "excellent",
+              "product_presentation": "excellent",
+              "cta": "clear",
+              "audience_size": "medium",
+              "competition": "medium",
+              "brand_strength": "weak",
+              "ctr_scalability": "high",
+              "cost_efficiency": "excellent",
+              "budget_depth": "moderate"
+            },
+            "recommendations": [
+              "Invest in brand building and social proof",
+              "Optimize weak areas before major scaling"
+            ]
+          }
+        },
+        "campaign_projections": {
+          "impressions": 486987,
+          "clicks": 737282,
+          "conversions": 690926,
+          "revenue": 51819468.05141129,
+          "profit": 51814468.05141129,
+          "roas": 10363.893610282259,
+          "estimated_aov": 75
+        },
+        "success_probability": {
+          "profitable": "high",
+          "scalable": "high",
+          "sustainable": "yes",
+          "optimization_needed": 2
+        },
+        "next_steps": [
+          "\ud83d\udfe2 Scale gradually - increase budget 2-3x and monitor",
+          "\u2022 Invest in brand building and social proof",
+          "\u2022 Optimize weak areas before major scaling"
+        ]
+      }
+    },
+    {
+      "platform": "facebook_feed",
+      "demographic": "millennials",
+      "result": {
+        "performance_predictions": {
+          "ctr": {
+            "predicted_ctr": 75.40827840000001,
+            "confidence_min": 60.32662272000001,
+            "confidence_max": 15.0,
+            "confidence_level": 0.8,
+            "base_score": 0.6255000000000001,
+            "platform_multiplier": 1.0,
+            "demographic_multiplier": 1.3,
+            "campaign_factors": {
+              "competition": 0.84,
+              "seasonal": 1.2,
+              "brand": 0.92
+            }
+          },
+          "conversion_rate": {
+            "predicted_conversion_rate": 110.25,
+            "confidence_min": 82.6875,
+            "confidence_max": 25.0,
+            "base_factors": {
+              "product_clarity": 1.0,
+              "cta_clarity": 0.9,
+              "trust_building": 1.0,
+              "value_demonstration": 0.6
+            },
+            "platform_multiplier": 1.0,
+            "trust_multiplier": 1.5,
+            "price_multiplier": 1.0,
+            "brand_factor": 0.84
+          },
+          "costs": {
+            "predicted_cpm": 12.647999999999998,
+            "predicted_cpc": 0.016772694282860056,
+            "predicted_cpa": 0.015213328147718872,
+            "required_roas": 3.3333333333333335,
+            "break_even_price": 0.050711093825729574,
+            "cost_factors": {
+              "base_cpm": 8.5,
+              "competition_multiplier": 1.24,
+              "seasonal_multiplier": 1.2
+            }
+          },
+          "scaling": {
+            "scaling_category": "high",
+            "overall_score": 0.6849999999999999,
+            "daily_revenue_potential": [
+              10000,
+              50000
+            ],
+            "content_score": 0.7,
+            "market_score": 0.5,
+            "performance_score": 0.85,
+            "engagement_score": 0.76,
+            "scaling_factors": {
+              "hook": "excellent",
+              "product_presentation": "excellent",
+              "cta": "clear",
+              "audience_size": "medium",
+              "competition": "medium",
+              "brand_strength": "weak",
+              "ctr_scalability": "high",
+              "cost_efficiency": "excellent",
+              "budget_depth": "moderate"
+            },
+            "recommendations": [
+              "Invest in brand building and social proof",
+              "Optimize weak areas before major scaling"
+            ]
+          }
+        },
+        "campaign_projections": {
+          "impressions": 395319,
+          "clicks": 298103,
+          "conversions": 328659,
+          "revenue": 24649438.726280842,
+          "profit": 24644438.726280842,
+          "roas": 4929.887745256168,
+          "estimated_aov": 75
+        },
+        "success_probability": {
+          "profitable": "high",
+          "scalable": "high",
+          "sustainable": "yes",
+          "optimization_needed": 2
+        },
+        "next_steps": [
+          "\ud83d\udfe2 Scale gradually - increase budget 2-3x and monitor",
+          "\u2022 Invest in brand building and social proof",
+          "\u2022 Optimize weak areas before major scaling"
+        ]
+      }
+    },
+    {
+      "platform": "tiktok",
+      "demographic": "gen_z",
+      "result": {
+        "performance_predictions": {
+          "ctr": {
+            "predicted_ctr": 175.411256832,
+            "confidence_min": 140.3290054656,
+            "confidence_max": 15.0,
+            "confidence_level": 0.8,
+            "base_score": 0.6255000000000001,
+            "platform_multiplier": 1.68,
+            "demographic_multiplier": 1.8,
+            "campaign_factors": {
+              "competition": 0.84,
+              "seasonal": 1.2,
+              "brand": 0.92
+            }
+          },
+          "conversion_rate": {
+            "predicted_conversion_rate": 79.38000000000001,
+            "confidence_min": 59.53500000000001,
+            "confidence_max": 25.0,
+            "base_factors": {
+              "product_clarity": 1.0,
+              "cta_clarity": 0.9,
+              "trust_building": 1.0,
+              "value_demonstration": 0.6
+            },
+            "platform_multiplier": 0.72,
+            "trust_multiplier": 1.5,
+            "price_multiplier": 1.0,
+            "brand_factor": 0.84
+          },
+          "costs": {
+            "predicted_cpm": 8.0352,
+            "predicted_cpc": 0.004580777850360942,
+            "predicted_cpa": 0.005770695200757044,
+            "required_roas": 3.3333333333333335,
+            "break_even_price": 0.019235650669190148,
+            "cost_factors": {
+              "base_cpm": 5.4,
+              "competition_multiplier": 1.24,
+              "seasonal_multiplier": 1.2
+            }
+          },
+          "scaling": {
+            "scaling_category": "high",
+            "overall_score": 0.6849999999999999,
+            "daily_revenue_potential": [
+              10000,
+              50000
+            ],
+            "content_score": 0.7,
+            "market_score": 0.5,
+            "performance_score": 0.85,
+            "engagement_score": 0.76,
+            "scaling_factors": {
+              "hook": "excellent",
+              "product_presentation": "excellent",
+              "cta": "clear",
+              "audience_size": "medium",
+              "competition": "medium",
+              "brand_strength": "weak",
+              "ctr_scalability": "high",
+              "cost_efficiency": "excellent",
+              "budget_depth": "moderate"
+            },
+            "recommendations": [
+              "Invest in brand building and social proof",
+              "Optimize weak areas before major scaling"
+            ]
+          }
+        },
+        "campaign_projections": {
+          "impressions": 622262,
+          "clicks": 1091517,
+          "conversions": 866446,
+          "revenue": 64983504.92516128,
+          "profit": 64978504.92516128,
+          "roas": 12996.700985032256,
+          "estimated_aov": 75
+        },
+        "success_probability": {
+          "profitable": "high",
+          "scalable": "high",
+          "sustainable": "yes",
+          "optimization_needed": 2
+        },
+        "next_steps": [
+          "\ud83d\udfe2 Scale gradually - increase budget 2-3x and monitor",
+          "\u2022 Invest in brand building and social proof",
+          "\u2022 Optimize weak areas before major scaling"
+        ]
+      }
+    },
+    {
+      "platform": "instagram_feed",
+      "demographic": "professionals",
+      "result": {
+        "performance_predictions": {
+          "ctr": {
+            "predicted_ctr": 54.235954080000006,
+            "confidence_min": 43.388763264000005,
+            "confidence_max": 15.0,
+            "confidence_level": 0.8,
+            "base_score": 0.6255000000000001,
+            "platform_multiplier": 0.85,
+            "demographic_multiplier": 1.1,
+            "campaign_factors": {
+              "competition": 0.84,
+              "seasonal": 1.2,
+              "brand": 0.92
+            }
+          },
+          "conversion_rate": {
+            "predicted_conversion_rate": 98.6125,
+            "confidence_min": 73.959375,
+            "confidence_max": 25.0,
+            "base_factors": {
+              "product_clarity": 1.0,
+              "cta_clarity": 0.9,
+              "trust_building": 1.0,
+              "value_demonstration": 0.6
+            },
+            "platform_multiplier": 0.92,
+            "trust_multiplier": 1.4583333333333335,
+            "price_multiplier": 1.0,
+            "brand_factor": 0.84
+          },
+          "costs": {
+            "predicted_cpm": 13.689599999999999,
+            "predicted_cpc": 0.0252408208396359,
+            "predicted_cpa": 0.025595964851956803,
+            "required_roas": 3.3333333333333335,
+            "break_even_price": 0.08531988283985602,
+            "cost_factors": {
+              "base_cpm": 9.2,
+              "competition_multiplier": 1.24,
+              "seasonal_multiplier": 1.2
+            }
+          },
+          "scaling": {
+            "scaling_category": "high",
+            "overall_score": 0.6849999999999999,
+            "daily_revenue_potential": [
+              10000,
+              50000
+            ],
+            "content_score": 0.7,
+            "market_score": 0.5,
+            "performance_score": 0.85,
+            "engagement_score": 0.76,
+            "scaling_factors": {
+              "hook": "excellent",
+              "product_presentation": "excellent",
+              "cta": "clear",
+              "audience_size": "medium",
+              "competition": "medium",
+              "brand_strength": "weak",
+              "ctr_scalability": "high",
+              "cost_efficiency": "excellent",
+              "budget_depth": "moderate"
+            },
+            "recommendations": [
+              "Invest in brand building and social proof",
+              "Optimize weak areas before major scaling"
+            ]
+          }
+        },
+        "campaign_projections": {
+          "impressions": 365240,
+          "clicks": 198091,
+          "conversions": 195343,
+          "revenue": 14650746.794228833,
+          "profit": 14645746.794228833,
+          "roas": 2930.1493588457665,
+          "estimated_aov": 75
+        },
+        "success_probability": {
+          "profitable": "high",
+          "scalable": "high",
+          "sustainable": "yes",
+          "optimization_needed": 2
+        },
+        "next_steps": [
+          "\ud83d\udfe2 Scale gradually - increase budget 2-3x and monitor",
+          "\u2022 Invest in brand building and social proof",
+          "\u2022 Optimize weak areas before major scaling"
+        ]
+      }
+    }
+  ],
+  "best_combination": {
+    "platform": "tiktok",
+    "demographic": "gen_z",
+    "expected_roas": 12996.700985032256
+  }
+}

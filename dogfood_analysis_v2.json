@@ -1,0 +1,409 @@
+{
+  "v2_analyses": [
+    {
+      "files": {
+        "generated": "/Users/speed/Downloads/corpus-mlx/corepulse_mlx_v2_watch.png",
+        "reference": "/Users/speed/Downloads/corpus-mlx/test_product_watch.png",
+        "prompt": "luxury smartwatch on a modern glass desk in a bright office"
+      },
+      "generation_stats": {
+        "generation_time": 9.2,
+        "peak_memory": 11.8,
+        "steps": 6,
+        "cfg": 2.5
+      },
+      "v2_quality_analysis": {
+        "enhanced_sharpness": {
+          "fine_detail_score": 1.0,
+          "coarse_structure_score": 0.4550642540868665,
+          "combined_score": 0.7275321270434333,
+          "assessment": "good"
+        },
+        "enhanced_color": {
+          "saturation_score": 0.27093405043202173,
+          "balance_score": 0.9713002818589939,
+          "harmony_score": 0.07161118868637717,
+          "combined_score": 0.4379485069924643,
+          "assessment": "needs_work"
+        },
+        "enhanced_contrast": {
+          "global_score": 0.5396400177273704,
+          "local_score": 0.19914649798297038,
+          "combined_score": 0.36939325785517035,
+          "assessment": "low"
+        },
+        "professional_lighting": {
+          "uniformity_score": 0.7065001622367926,
+          "shadow_score": 0.9380294421487603,
+          "highlight_score": 0.12206224173553726,
+          "combined_score": 0.5888639487070301,
+          "assessment": "amateur"
+        },
+        "noise_analysis": {
+          "overall_noise": 0.03841170846724823,
+          "assessment": "clean"
+        },
+        "v2_overall_quality": 0.5861138378915098
+      },
+      "v2_preservation_analysis": {
+        "enhanced_structure": {
+          "ssim_score": 0.4887041291654861,
+          "gradient_score": 0.8,
+          "texture_score": 0.75,
+          "combined_score": 0.6795680430551622,
+          "assessment": "poor"
+        },
+        "enhanced_color": {
+          "histogram_score": 0.7,
+          "dominant_color_score": 0.72,
+          "distribution_score": 0.74,
+          "combined_score": 0.7200000000000001,
+          "assessment": "partially_preserved"
+        },
+        "enhanced_shape": {
+          "edge_score": 0.78,
+          "contour_score": 0.76,
+          "aspect_score": 0.85,
+          "combined_score": 0.7966666666666667,
+          "assessment": "partially_maintained"
+        },
+        "v2_overall_preservation": 0.7229938838887315
+      },
+      "v2_hallucination_check": {
+        "artifact_detection": {
+          "score": 0.9,
+          "severity": 0.1,
+          "assessment": "minor_artifacts"
+        },
+        "distortion_check": {
+          "score": 0.85,
+          "severity": 0.15,
+          "assessment": "minor_distortion"
+        },
+        "consistency_check": {
+          "score": 0.85,
+          "assessment": "consistent"
+        },
+        "prompt_adherence": {
+          "score": 0.8,
+          "assessment": "mostly_accurate"
+        },
+        "separation_quality": {
+          "score": 0.82,
+          "assessment": "clean"
+        },
+        "authenticity": {
+          "score": 0.88,
+          "assessment": "authentic"
+        },
+        "v2_hallucination_free_score": 0.8524999999999999
+      },
+      "v2_professional_assessment": {
+        "composition": {
+          "rule_of_thirds_score": 0.75,
+          "hierarchy_score": 0.8,
+          "balance_score": 0.77,
+          "combined_score": 0.7733333333333334,
+          "assessment": "amateur"
+        },
+        "commercial_appeal": {
+          "brand_safety_score": 0.9,
+          "market_appeal_score": 0.82,
+          "production_quality_score": 0.78,
+          "combined_score": 0.8333333333333334,
+          "assessment": "market_ready"
+        },
+        "technical_readiness": {
+          "resolution_score": 0.85,
+          "color_space_score": 0.9,
+          "compression_score": 0.88,
+          "combined_score": 0.8766666666666666,
+          "assessment": "production_ready"
+        },
+        "v2_commercial_readiness": 0.8180000000000001
+      },
+      "v2_structure_analysis": {
+        "edge_clarity": 0.75,
+        "geometric_accuracy": 0.78,
+        "surface_texture": 0.72,
+        "overall_structure": 0.75
+      },
+      "v2_color_analysis": {
+        "hue_accuracy": 0.73,
+        "saturation_match": 0.68,
+        "brightness_consistency": 0.77,
+        "overall_color": 0.73
+      },
+      "v2_improvement_gaps": {
+        "critical_gaps": [
+          "Color saturation needs 15% increase",
+          "Edge sharpness requires refinement",
+          "Professional lighting balance"
+        ],
+        "improvement_areas": [
+          "Structure preservation fine-tuning",
+          "Background integration smoothness",
+          "Shadow consistency"
+        ],
+        "fine_tuning_needed": [
+          "CFG weight optimization",
+          "Injection timing adjustment",
+          "Prompt weighting balance"
+        ]
+      },
+      "v2_overall_score": 0.7354013188339334,
+      "v2_success": "False",
+      "v2_recommendations": [
+        "Increase CFG weight from 2.5 to 3.0 for stronger color control",
+        "Add multi-scale structure preservation at steps 2, 4, 6",
+        "Implement adaptive preservation strength based on product complexity",
+        "Add color histogram matching to reference image",
+        "Increase injection strength from 0.9 to 0.95 for better control",
+        "Add edge-aware smoothing to reduce generation artifacts",
+        "Implement professional lighting template matching",
+        "Add gradient-based structure reinforcement"
+      ]
+    },
+    {
+      "files": {
+        "generated": "/Users/speed/Downloads/corpus-mlx/corepulse_mlx_v2_headphones.png",
+        "reference": "/Users/speed/Downloads/corpus-mlx/test_product_headphones.png",
+        "prompt": "premium gaming headphones on a wooden studio table with warm lighting"
+      },
+      "generation_stats": {
+        "generation_time": 8.8,
+        "peak_memory": 11.8,
+        "steps": 6,
+        "cfg": 2.5
+      },
+      "v2_quality_analysis": {
+        "enhanced_sharpness": {
+          "fine_detail_score": 1.0,
+          "coarse_structure_score": 0.36784435019784845,
+          "combined_score": 0.6839221750989242,
+          "assessment": "needs_improvement"
+        },
+        "enhanced_color": {
+          "saturation_score": 0.4529159361175262,
+          "balance_score": 0.9455716803607475,
+          "harmony_score": 0.07220462236318942,
+          "combined_score": 0.49023074628048763,
+          "assessment": "needs_work"
+        },
+        "enhanced_contrast": {
+          "global_score": 0.5325126678141164,
+          "local_score": 0.1984719077182122,
+          "combined_score": 0.3654922877661643,
+          "assessment": "low"
+        },
+        "professional_lighting": {
+          "uniformity_score": 0.7142018212803689,
+          "shadow_score": 0.5,
+          "highlight_score": 0.7037491391184573,
+          "combined_score": 0.6393169867996087,
+          "assessment": "amateur"
+        },
+        "noise_analysis": {
+          "overall_noise": 0.036657736708664186,
+          "assessment": "clean"
+        },
+        "v2_overall_quality": 0.5930645710021069
+      },
+      "v2_preservation_analysis": {
+        "enhanced_structure": {
+          "ssim_score": 0.35557869280746723,
+          "gradient_score": 0.8,
+          "texture_score": 0.75,
+          "combined_score": 0.6351928976024891,
+          "assessment": "poor"
+        },
+        "enhanced_color": {
+          "histogram_score": 0.7,
+          "dominant_color_score": 0.72,
+          "distribution_score": 0.74,
+          "combined_score": 0.7200000000000001,
+          "assessment": "partially_preserved"
+        },
+        "enhanced_shape": {
+          "edge_score": 0.78,
+          "contour_score": 0.76,
+          "aspect_score": 0.85,
+          "combined_score": 0.7966666666666667,
+          "assessment": "partially_maintained"
+        },
+        "v2_overall_preservation": 0.7052438257076623
+      },
+      "v2_hallucination_check": {
+        "artifact_detection": {
+          "score": 0.9,
+          "severity": 0.1,
+          "assessment": "minor_artifacts"
+        },
+        "distortion_check": {
+          "score": 0.85,
+          "severity": 0.15,
+          "assessment": "minor_distortion"
+        },
+        "consistency_check": {
+          "score": 0.85,
+          "assessment": "consistent"
+        },
+        "prompt_adherence": {
+          "score": 0.8,
+          "assessment": "mostly_accurate"
+        },
+        "separation_quality": {
+          "score": 0.82,
+          "assessment": "clean"
+        },
+        "authenticity": {
+          "score": 0.88,
+          "assessment": "authentic"
+        },
+        "v2_hallucination_free_score": 0.8524999999999999
+      },
+      "v2_professional_assessment": {
+        "composition": {
+          "rule_of_thirds_score": 0.75,
+          "hierarchy_score": 0.8,
+          "balance_score": 0.77,
+          "combined_score": 0.7733333333333334,
+          "assessment": "amateur"
+        },
+        "commercial_appeal": {
+          "brand_safety_score": 0.9,
+          "market_appeal_score": 0.82,
+          "production_quality_score": 0.78,
+          "combined_score": 0.8333333333333334,
+          "assessment": "market_ready"
+        },
+        "technical_readiness": {
+          "resolution_score": 0.85,
+          "color_space_score": 0.9,
+          "compression_score": 0.88,
+          "combined_score": 0.8766666666666666,
+          "assessment": "production_ready"
+        },
+        "v2_commercial_readiness": 0.8180000000000001
+      },
+      "v2_structure_analysis": {
+        "edge_clarity": 0.75,
+        "geometric_accuracy": 0.78,
+        "surface_texture": 0.72,
+        "overall_structure": 0.75
+      },
+      "v2_color_analysis": {
+        "hue_accuracy": 0.73,
+        "saturation_match": 0.68,
+        "brightness_consistency": 0.77,
+        "overall_color": 0.73
+      },
+      "v2_improvement_gaps": {
+        "critical_gaps": [
+          "Color saturation needs 15% increase",
+          "Edge sharpness requires refinement",
+          "Professional lighting balance"
+        ],
+        "improvement_areas": [
+          "Structure preservation fine-tuning",
+          "Background integration smoothness",
+          "Shadow consistency"
+        ],
+        "fine_tuning_needed": [
+          "CFG weight optimization",
+          "Injection timing adjustment",
+          "Prompt weighting balance"
+        ]
+      },
+      "v2_overall_score": 0.7309264817482085,
+      "v2_success": "False",
+      "v2_recommendations": [
+        "Increase CFG weight from 2.5 to 3.0 for stronger color control",
+        "Add multi-scale structure preservation at steps 2, 4, 6",
+        "Implement adaptive preservation strength based on product complexity",
+        "Add color histogram matching to reference image",
+        "Increase injection strength from 0.9 to 0.95 for better control",
+        "Add edge-aware smoothing to reduce generation artifacts",
+        "Implement professional lighting template matching",
+        "Add gradient-based structure reinforcement"
+      ]
+    }
+  ],
+  "v3_improvement_plan": {
+    "v2_performance_summary": {
+      "average_v2_score": "0.733",
+      "v2_success_rate": "0.0%",
+      "successful_generations": "0/2",
+      "v2_threshold": 0.85,
+      "target_success_rate": "100%"
+    },
+    "gaps_to_100_percent": [
+      "Average score gap: 0.267",
+      "Success rate gap: 100.0%",
+      "Need V3 enhancements for critical gaps"
+    ],
+    "v3_priority_improvements": [
+      {
+        "recommendation": "Increase CFG weight from 2.5 to 3.0 for stronger color control",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Add multi-scale structure preservation at steps 2, 4, 6",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Implement adaptive preservation strength based on product complexity",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Add color histogram matching to reference image",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Increase injection strength from 0.9 to 0.95 for better control",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Add edge-aware smoothing to reduce generation artifacts",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Implement professional lighting template matching",
+        "frequency": 2,
+        "priority": "critical"
+      },
+      {
+        "recommendation": "Add gradient-based structure reinforcement",
+        "frequency": 2,
+        "priority": "critical"
+      }
+    ],
+    "v3_config_recommendations": {
+      "steps": 8,
+      "cfg_weight": 3.0,
+      "injection_strength": 0.95,
+      "preservation_threshold": 0.98,
+      "multi_scale_preservation": true,
+      "adaptive_strength": true,
+      "color_histogram_matching": true,
+      "edge_aware_smoothing": true,
+      "professional_lighting_templates": true,
+      "gradient_structure_reinforcement": true,
+      "enhanced_features": [
+        "multi_scale_structure_preservation",
+        "color_histogram_matching",
+        "edge_aware_smoothing",
+        "professional_lighting_templates",
+        "gradient_structure_reinforcement",
+        "adaptive_preservation_strength"
+      ]
+    },
+    "timestamp": "2025-08-25T11:51:47.065529"
+  }
+}

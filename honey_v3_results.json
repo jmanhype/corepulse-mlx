@@ -1,0 +1,32 @@
+{
+  "timestamp": "2024-01-15T10:30:00",
+  "product": "ARGANADISE Carob Honey",
+  "total_scenarios": 2,
+  "results": [
+    {
+      "scenario": "kitchen_hold",
+      "score": 0.25,
+      "output": "/Users/speed/Downloads/corpus-mlx/honey_v3_kitchen_hand.png",
+      "success": false
+    },
+    {
+      "scenario": "chef_drizzle",
+      "score": 0.25,
+      "output": "/Users/speed/Downloads/corpus-mlx/honey_v3_chef_drizzle.png",
+      "success": false
+    }
+  ],
+  "average_score": 0.25,
+  "success_rate": 0.0,
+  "v3_features": [
+    "steps",
+    "cfg_weight",
+    "injection_strength",
+    "preservation_threshold",
+    "edge_preservation",
+    "color_fidelity",
+    "structure_weight",
+    "lighting_adaptation",
+    "post_process_strength"
+  ]
+}
