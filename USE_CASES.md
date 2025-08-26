@@ -1,9 +1,14 @@
 # CorePulse-MLX: Real-World Use Cases
 
+![Use Cases Gallery](artifacts/images/USE_CASES_GALLERY.png)
+
 ## 🎯 Practical Applications
 
 ### 1. **E-Commerce Product Variations**
 **Technique:** Prompt Injection + Regional Control
+
+![E-Commerce Example](artifacts/images/use_cases/01_ECOMMERCE_PRODUCT.png)
+*Left: Original product | Right: Material variation using CorePulse*
 
 **Scenario:** Generate product variations without new photoshoots
 ```python
@@ -31,6 +36,9 @@ for material in materials:
 ### 2. **Architecture & Real Estate Visualization**
 **Technique:** Multi-Scale Control
 
+![Architecture Example](artifacts/images/use_cases/02_ARCHITECTURE_SEASONS.png)
+*Left: Original building | Right: Winter season variation*
+
 **Scenario:** Show same building in different seasons/times
 ```python
 # Structure: "modern glass office building"
@@ -57,6 +65,9 @@ seasons = {
 ### 3. **Fashion & Apparel Design**
 **Technique:** Token Masking + Attention Manipulation
 
+![Fashion Example](artifacts/images/use_cases/03_FASHION_FOCUS.png)
+*Left: Original with model | Right: Enhanced garment focus*
+
 **Scenario:** Focus on garment, minimize model influence
 ```python
 # Prompt: "model wearing designer dress in studio"
@@ -81,6 +92,9 @@ class FashionFocus:
 
 ### 4. **Game Asset Generation**
 **Technique:** Regional Injection + Style Control
+
+![Game Assets Example](artifacts/images/use_cases/04_GAME_ASSETS.png)
+*Left: Original village | Right: Desert biome variation*
 
 **Scenario:** Create variations of game environments
 ```python
@@ -107,6 +121,9 @@ regions = {
 
 ### 5. **Medical & Scientific Visualization**
 **Technique:** Attention Manipulation + Precision Control
+
+![Medical Example](artifacts/images/use_cases/05_MEDICAL_HIGHLIGHT.png)
+*Left: Standard anatomy | Right: Heart system highlighted*
 
 **Scenario:** Highlight specific anatomical features
 ```python
@@ -135,6 +152,9 @@ highlights = {
 ### 6. **Marketing Campaign Localization**
 **Technique:** Content Injection + Cultural Adaptation
 
+![Marketing Example](artifacts/images/use_cases/06_MARKETING_LOCAL.png)
+*Left: Original scene | Right: Culturally localized version*
+
 **Scenario:** Adapt campaigns for different markets
 ```python
 # Base: "family enjoying breakfast at modern kitchen table"
@@ -162,6 +182,9 @@ markets = {
 ### 7. **Interior Design Visualization**
 **Technique:** Multi-Scale + Style Injection
 
+![Interior Design Example](artifacts/images/use_cases/07_INTERIOR_STYLES.png)
+*Left: Original room | Right: Minimalist style variation*
+
 **Scenario:** Show same room in different design styles
 ```python
 # Structure: "spacious living room with large windows"
@@ -187,6 +210,9 @@ styles = {
 
 ### 8. **Film & VFX Preproduction**
 **Technique:** Progressive Attention + Temporal Control
+
+![Storyboard Example](artifacts/images/use_cases/08_STORYBOARD.png)
+*Left: Frame 1 | Right: Frame 5 with progressive transformation*
 
 **Scenario:** Storyboard scene transitions
 ```python
