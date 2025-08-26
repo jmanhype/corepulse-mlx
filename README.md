@@ -4,6 +4,31 @@ A modular toolkit for advanced diffusion model manipulation on Apple Silicon, pr
 
 ![CorePulse Gallery](artifacts/images/DATAVOID_COMPARISON_GALLERY.png)
 
+## 🚀 REAL CorePulse V4: Pre-Attention Hook Implementation
+
+We've implemented TRUE CorePulse techniques with proper pre-attention hooks that actually manipulate the diffusion process at the right places - BEFORE attention computation, not after.
+
+### Real Effects Demonstrated
+
+![Token Masking Effect](artifacts/images/readme/REAL_token_masking.png)
+*REAL Token Masking: Selectively masking attention to specific token positions*
+
+![Regional Control Effect](artifacts/images/readme/REAL_regional_control.png)
+*REAL Regional Control: Spatial amplification of center region with peripheral suppression*
+
+![Attention Manipulation Effect](artifacts/images/readme/REAL_attention_manipulation.png)
+*REAL Attention Manipulation: Enhanced self-attention through diagonal score manipulation*
+
+![Combined Effects](artifacts/images/readme/REAL_combined_effects.png)
+*REAL Combined Effects: Multiple techniques applied simultaneously for maximum control*
+
+### Key Implementation Features
+- ✅ **Pre-KV Hooks**: Manipulate queries, keys, and values BEFORE attention computation
+- ✅ **Pre-Softmax Hooks**: Modify attention scores BEFORE softmax normalization
+- ✅ **Zero Regression**: Clean architecture with no impact when disabled
+- ✅ **Protocol-Based**: Extensible hook system using Python protocols
+- ✅ **MLX Optimized**: Fully compatible with Apple Silicon acceleration
+
 ## 🎯 Core Techniques
 
 ### 1. Prompt Injection
