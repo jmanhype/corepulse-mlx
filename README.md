@@ -191,6 +191,33 @@ Explore the `docs/examples/` directory for complete implementations:
 
 ## Visual Proof Gallery
 
+### 🎯 DATAVOID EXAMPLES - EXACT RECREATIONS
+
+![DataVoid Examples Complete](artifacts/images/readme/DATAVOID_COMPLETE_SHOWCASE.png)
+*All 5 core CorePulse techniques from DataCTE/CorePulse recreated with MLX*
+
+**Demonstrated Techniques:**
+
+#### 1. Token-Level Masking
+![Token Masking](artifacts/images/readme/DATAVOID_token_masking.png)
+*Mask 'cat' tokens while preserving 'playing at a park' context*
+
+#### 2. Regional/Spatial Injection  
+![Regional Injection](artifacts/images/readme/DATAVOID_regional_injection.png)
+*Apply 'golden retriever dog' only to center, preserve park environment*
+
+#### 3. Attention Manipulation
+![Attention Boost](artifacts/images/readme/DATAVOID_attention_boost.png)
+*Boost attention on 'photorealistic' to enhance realism without changing prompt*
+
+#### 4. Multi-Scale Control
+![Multi-Scale](artifacts/images/readme/DATAVOID_multiscale.png)
+*Gothic cathedral structure with intricate stone carving details*
+
+#### 5. Content/Style Separation
+![Content Style](artifacts/images/readme/DATAVOID_content_style.png)
+*Inject 'white cat' content while keeping garden context from original prompt*
+
 ### 🔥 EXPERIMENTAL POWER SHOWCASE
 
 ![CorePulse Experimental Power](artifacts/images/readme/POWER_SHOWCASE.png)
