@@ -14,6 +14,7 @@ Inject different prompts into specific architectural blocks of the UNet during g
 - **Composition blocks** (input layers) → Overall layout and structure
 
 ![Prompt Injection Demo](artifacts/images/readme/REAL_prompt_injection.png)
+*Left: Base prompt "orange cat in garden" | Right: Same prompt with "dog" injected into content blocks*
 
 ### 🎭 Token-Level Attention Masking
 Control which parts of your prompt have influence by masking attention to specific tokens/words. This is different from spatial masking - it works at the linguistic level rather than image regions.
@@ -32,6 +33,7 @@ Apply prompt injections only to specific regions of the image using spatial mask
 - **Context preservation** → Background and surroundings remain untouched
 
 ![Regional Injection Demo](artifacts/images/readme/REAL_regional_control.png)
+*Left: Original forest scene | Right: Waterfall injected into center region only*
 
 ### ⚡ Attention Manipulation
 Control how much the model focuses on specific words in your prompt by directly modifying attention weights. Unlike changing the prompt text, this amplifies or reduces the model's internal focus on existing words.
@@ -40,7 +42,8 @@ Control how much the model focuses on specific words in your prompt by directly 
 - **Reduce attention** (<1.0) → Decrease focus on certain words
 - **Spatial control** → Apply attention changes only to specific image regions
 
-![Attention Manipulation Demo](artifacts/images/readme/REAL_attention_manipulation.png)
+![Attention Manipulation Demo](artifacts/images/readme/REAL_attention_control.png)
+*Left: Standard generation | Right: "Photorealistic" attention boosted 5x*
 
 ### 🏗️ Multi-Scale Control
 Apply different prompts to different resolution levels of the UNet architecture. This approach lets you control structure and details independently:
@@ -49,7 +52,8 @@ Apply different prompts to different resolution levels of the UNet architecture.
 - **Mid-Level** (medium resolution) → Regional features, object relationships
 - **Detail Level** (highest resolution) → Fine textures, surface details
 
-![Multi-Scale Control Demo](artifacts/images/readme/REAL_multiscale_control.png)
+![Multi-Scale Control Demo](artifacts/images/readme/REAL_multi_scale.png)
+*Left: Gothic cathedral structure | Right: Same structure with weathered stone details*
 
 ## Technical Features
 
