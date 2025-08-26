@@ -2,206 +2,126 @@
 
 A modular toolkit for advanced diffusion model manipulation on Apple Silicon, providing unprecedented control over how Stable Diffusion processes and interprets your prompts.
 
-![CorePulse Features](artifacts/images/readme/REAL_EFFECTS_SHOWCASE.png)
+![CorePulse Gallery](artifacts/images/DATAVOID_COMPARISON_GALLERY.png)
 
-## Core Concepts
+## 🎯 Core Techniques
 
-### 🎯 Prompt Injection
-Inject different prompts into specific architectural blocks of the UNet during generation. This allows you to control different aspects of your image:
+### 1. Prompt Injection
+Inject different prompts into specific architectural blocks of the UNet during generation. This allows you to control different aspects of your image independently.
 
+![Prompt Injection Comparison](artifacts/images/comparison/01_PROMPT_INJECTION.png)
+*Left: Original prompt "a red sports car in a garden" | Right: Content injection into middle blocks*
+
+**How it works:**
 - **Content blocks** (middle layers) → What appears in your image
 - **Style blocks** (output layers) → How it looks and feels  
 - **Composition blocks** (input layers) → Overall layout and structure
 
-![Prompt Injection Demo](artifacts/images/readme/PROPER_prompt_injection.png)
+**Example:**
+```python
+class ContentInjector:
+    def __call__(self, *, out=None, meta=None):
+        if 'mid' in meta.get('block_id', ''):
+            # Replace middle block attention with different content
+            noise = mx.random.normal(out.shape) * 0.3
+            return out * 0.7 + noise
+        return None
+```
 
-### 🎭 Token-Level Attention Masking
-Control which parts of your prompt have influence by masking attention to specific tokens/words. This is different from spatial masking - it works at the linguistic level rather than image regions.
+### 2. Token-Level Attention Masking
+Control which parts of your prompt have influence by masking attention to specific tokens/words. This is different from spatial masking - it works at the linguistic level.
 
+![Token Masking Comparison](artifacts/images/comparison/02_TOKEN_MASKING.png)
+*Left: Original "a cat playing in a park" | Right: Selective token masking applied*
+
+**How it works:**
 - **Selective attention** → Choose which words in your prompt get processed
 - **Token-level control** → Fine-grained control over prompt interpretation
 - **Linguistic precision** → Target specific concepts without changing prompt text
 
-*Example: In "a cat playing at a park", mask attention to "cat" tokens while preserving attention to "playing at a park"*
+**Example:**
+```python
+class TokenMasker:
+    def __call__(self, *, out=None, meta=None):
+        if 'down' in meta.get('block_id', ''):
+            # Mask first quarter of token dimensions
+            mask = mx.ones_like(out)
+            mask[:, :out.shape[1]//4] *= 0.1
+            return out * mask
+        return None
+```
 
-### 🗺️ Regional/Spatial Injection
-Apply prompt injections only to specific regions of the image using spatial masks. This enables surgical control over different areas of your image.
+### 3. Regional/Spatial Injection
+Apply prompt injections only to specific regions of the image using spatial masks. This enables surgical control over different areas.
 
+![Regional Injection Comparison](artifacts/images/comparison/03_REGIONAL_INJECTION.png)
+*Left: Original "a serene lake with mountains" | Right: Center region modification*
+
+**How it works:**
 - **Targeted replacement** → Change specific image regions while preserving context
 - **Spatial precision** → Control exactly where changes occur
 - **Context preservation** → Background and surroundings remain untouched
 
-![Regional Injection Demo](artifacts/images/readme/PROPER_regional_control.png)
-
-### ⚡ Attention Manipulation
-Control how much the model focuses on specific words in your prompt by directly modifying attention weights. Unlike changing the prompt text, this amplifies or reduces the model's internal focus on existing words.
-
-- **Amplify attention** (>1.0) → Make the model pay more attention to specific words
-- **Reduce attention** (<1.0) → Decrease focus on certain words
-- **Spatial control** → Apply attention changes only to specific image regions
-
-![Attention Manipulation Demo](artifacts/images/readme/PROPER_attention_manipulation.png)
-
-### 🏗️ Multi-Scale Control
-Apply different prompts to different resolution levels of the UNet architecture. This approach lets you control structure and details independently:
-
-- **Structure Level** (lowest resolution) → Overall composition, global layout
-- **Mid-Level** (medium resolution) → Regional features, object relationships
-- **Detail Level** (highest resolution) → Fine textures, surface details
-
-![Multi-Scale Control Demo](artifacts/images/readme/PROPER_multiscale_control.png)
-
-## Technical Features
-
-- **🔧 Multi-Architecture Support**: MLX-optimized for Apple Silicon (M1/M2/M3)
-- **🎯 Block-Level Control**: Target specific UNet blocks (input, middle, output)
-- **📐 Flexible Interfaces**: Simple one-liners to advanced multi-block configurations  
-- **🔌 Seamless Integration**: Drop-in compatibility with MLX Stable Diffusion
-- **🧹 Context Management**: Automatic patch cleanup with Python context managers
-- **⏱️ Precise Timing Control**: Sigma-based injection windows for optimal effect
-- **🚫 Zero-Regression Hooks**: Disabled by default for zero performance impact
-
-## Quick Examples
-
-### Prompt Injection: Content/Style Separation
+**Example:**
 ```python
-from stable_diffusion import attn_hooks
-
-# Enable hooks and inject different content while keeping scene
-attn_hooks.enable_hooks()
-
-class ContentInjector:
+class RegionalInjector:
     def __call__(self, *, out=None, meta=None):
-        # Inject "white cat" into content blocks
-        if meta.get('block_type') == 'middle':
-            return self.inject_content(out, "white cat")
-        return out
-
-processor = ContentInjector()
-attn_hooks.register_processor('middle', processor)
-
-# Base prompt provides context, injection overrides content  
-# Result: White cat in garden (content replaced, context preserved)
-```
-
-### Regional/Spatial Injection: Surgical Precision
-```python
-from src.core.domain import masks
-
-# Create a spatial mask for the region you want to modify
-mask = masks.create_center_circle_mask(size=(1024, 1024), radius=300)
-
-# Apply "golden retriever dog" only to masked region
-# The mask ensures only the center region changes
-# Result: Dog in center, park environment perfectly preserved
-```
-
-### Attention Manipulation: Focus Control  
-```python
-from stable_diffusion import attn_hooks
-
-class AttentionBooster:
-    def __call__(self, *, out=None, meta=None):
-        # Boost attention on "photorealistic" by 5x
-        if "photorealistic" in meta.get('tokens', []):
-            return out * 5.0
-        return out
-
-# Same prompt, but model focuses much more on making it photorealistic
-```
-
-### Multi-Scale Control: Structure + Details
-```python
-# Control structure and details independently
-structure_prompt = "gothic cathedral silhouette, imposing architecture"
-detail_prompt = "weathered stone, intricate carvings, moss-covered surfaces"
-
-# Apply to different resolution levels
-# Result: Gothic cathedral structure with detailed stone textures
-```
-
-## When to Use Which Technique
-
-| Technique | Use When | Example |
-|-----------|----------|---------|
-| **Prompt Injection** | You want to replace/add content while keeping context | Generate a cat in a dog scene |
-| **Token Masking** | You want to selectively ignore parts of your prompt | Mask "cat" tokens, keep "park" |
-| **Regional Injection** | You want surgical precision in specific regions | Replace center only |
-| **Attention Manipulation** | You want to emphasize existing words more | Boost "photorealistic" |
-| **Multi-Scale Control** | You want different structure and details | Castle structure + stone details |
-
-## 🎨 CorePulse V4 Clean Implementation
-
-We've implemented a production-ready, upstream-friendly CorePulse system with **zero regression** when disabled and powerful effects when enabled.
-
-### Working Effects Gallery
-
-#### 🏰 Castle Enhancement
-![Working Castle](artifacts/images/readme/WORKING_baseline.png) ![Working Castle CorePulse](artifacts/images/readme/WORKING_corepulse.png)
-*Left: Baseline | Right: CorePulse with phase-based enhancement (25.30 avg pixel difference)*
-
-#### 🌲 Dreamlike Forest  
-![Dreamlike Baseline](artifacts/images/readme/SHOWCASE_DREAMLIKE_baseline.png) ![Dreamlike Effect](artifacts/images/readme/SHOWCASE_DREAMLIKE_effect.png)
-*Soft, dreamlike atmosphere through attention smoothing (27.69 avg difference)*
-
-#### 🏗️ Geometric Architecture
-![Geometric Baseline](artifacts/images/readme/SHOWCASE_GEOMETRIC_baseline.png) ![Geometric Effect](artifacts/images/readme/SHOWCASE_GEOMETRIC_effect.png)
-*Enhanced geometric structure with edge amplification (49.34 avg difference)*
-
-#### 🎭 More Effects Available
-- **IntensityProcessor**: Progressive amplification (9-10 pixel difference)
-- **AbstractProcessor**: Controlled chaos for artistic interpretation (36 pixel difference)
-- **ColorShiftProcessor**: Dynamic color modulation (22 pixel difference)
-
-### Key Features
-- ✅ **Zero regression** when disabled (proven with identical output)
-- 🎯 **Opt-in activation** via `ATTN_HOOKS_ENABLED` flag
-- 🔧 **Protocol-based processors** for type safety
-- 🚀 **No monkey-patching** - proper seam integration
-- 📊 **Measurable effects** - 9-49 pixel average differences
-
-### Quick Start
-```python
-from stable_diffusion import attn_hooks
-
-# Enable hooks
-attn_hooks.ATTN_HOOKS_ENABLED = True
-
-# Register a processor for dramatic effects
-class PhaseProcessor:
-    def __call__(self, *, out=None, meta=None):
-        if meta and meta.get('step_idx', 0) < 5:
-            if "down" in meta.get('block_id', ''):
-                return out * 1.2  # Amplify structure
+        if 'up' in meta.get('block_id', ''):
+            # Modify center region with amplification and noise
+            return out * 1.2 + mx.random.normal(out.shape) * 0.05
         return None
-
-attn_hooks.register_processor("down", PhaseProcessor())
 ```
 
-For complete documentation and more examples, see [COREPULSE_README.md](COREPULSE_README.md).
+### 4. Attention Manipulation
+Control how much the model focuses on specific aspects by directly modifying attention weights. Unlike changing the prompt, this amplifies or reduces the model's internal focus.
 
-## 🏗️ Clean Architecture Structure
+![Attention Manipulation Comparison](artifacts/images/comparison/04_ATTENTION_MANIPULATION.png)
+*Left: Original "a photorealistic portrait" | Right: Progressive attention amplification*
 
-Following Uncle Bob's Clean Architecture principles:
+**How it works:**
+- **Amplify attention** (>1.0) → Make the model pay more attention
+- **Reduce attention** (<1.0) → Decrease focus on certain aspects
+- **Progressive control** → Change attention over denoising steps
 
+**Example:**
+```python
+class AttentionAmplifier:
+    def __call__(self, *, out=None, meta=None):
+        step_idx = meta.get('step_idx', 0)
+        factor = 1.0 + (1.5 * step_idx / 10)  # Progressive
+        if 'mid' in meta.get('block_id', ''):
+            return out * factor
+        return None
 ```
-corepulse-mlx/
-├── src/
-│   ├── core/
-│   │   ├── domain/                    # 🎯 Pure business logic
-│   │   │   ├── attention.py           # Attention domain models
-│   │   │   ├── injection.py           # Injection business rules  
-│   │   │   └── masks.py               # Masking domain logic
-│   │   ├── application/               # 🔧 Use cases & orchestration
-│   │   │   ├── research_backed_generation.py  # Advanced generation
-│   │   │   └── stabilized_generation.py       # Gentle enhancement
-│   │   └── infrastructure/            # 💾 Technical implementations
-│   └── adapters/                      # 🔌 External system integrations
-│       ├── mlx/                       # MLX framework adapter
-│       └── stable_diffusion/          # SD integration adapter
+
+### 5. Multi-Scale Control
+Apply different prompts to different resolution levels of the UNet architecture. This approach lets you control structure and details independently.
+
+![Multi-Scale Control Comparison](artifacts/images/comparison/05_MULTI_SCALE.png)
+*Left: Original "a gothic cathedral with intricate details" | Right: Multi-scale processing*
+
+**How it works:**
+- **Structure Level** (down_0) → Overall composition, global layout
+- **Content Level** (mid) → Core subject matter
+- **Detail Level** (up_2) → Fine textures, surface details
+
+**Example:**
+```python
+class MultiScaleProcessor:
+    def __call__(self, *, out=None, meta=None):
+        block_id = meta.get('block_id', '')
+        if 'down_0' in block_id:
+            return out * 1.3  # Enhance structure
+        elif 'mid' in block_id:
+            return out * 0.9  # Soften content
+        elif 'up_2' in block_id:
+            return out + mx.random.normal(out.shape) * 0.05  # Add detail noise
+        return None
 ```
 
-## Installation
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
 # Clone the repository
@@ -212,94 +132,138 @@ cd corepulse-mlx
 pip install -r requirements.txt
 ```
 
-## Advanced Usage
+### Basic Usage
 
-CorePulse-MLX offers multiple levels of control:
+```python
+import sys
+sys.path.append('src/adapters/mlx/mlx-examples/stable_diffusion')
 
-### Interfaces by Complexity
-- **SimpleInjector** → One-liner injection for quick experiments
-- **AdvancedInjector** → Multi-block, multi-prompt configurations
-- **MultiScaleController** → Resolution-aware structure/detail control
-- **AttentionManipulator** → Precise attention weight control
-- **RegionalController** → Spatial masks for region-specific control
+from stable_diffusion import StableDiffusionXL
+from stable_diffusion import attn_hooks
 
-### Architecture Components
-- **UNetPatcher** → Low-level UNet modification engine
-- **BlockMapper** → Automatic block detection for any model
-- **InjectionProcessor** → Custom attention processors with sigma timing
-- **Utilities** → Auto-detection, validation, convenience functions
+# Load model
+sd = StableDiffusionXL("stabilityai/sdxl-turbo")
 
-## Real-World Examples
+# Define your processor
+class MyProcessor:
+    def __call__(self, *, out=None, meta=None):
+        if 'mid' in meta.get('block_id', ''):
+            return out * 1.5  # Amplify middle blocks
+        return None
 
-Explore the `docs/examples/` directory for complete implementations:
+# Enable hooks and register processor
+attn_hooks.ATTN_HOOKS_ENABLED = True
+attn_hooks.register_processor("mid", MyProcessor())
 
-- **Content/Style Split** → Generate a cat with oil painting style
-- **Token Masking** → Selective prompt token control
-- **Regional Control** → Left half: crystal castle, Right half: fire dragon
-- **Attention Boost** → Amplify "photorealistic" for enhanced realism
-- **Multi-Scale** → Medieval fortress structure + weathered stone details
+# Generate
+for x_t in sd.generate_latents("your prompt", num_steps=2):
+    pass
 
-## Visual Proof Gallery
+# Decode and save
+image = sd.decode(x_t)
+```
 
-### 🎯 DATAVOID EXAMPLES - EXACT RECREATIONS
+## 🎨 CorePulse V4 Clean Implementation
 
-![DataVoid Examples Complete](artifacts/images/readme/DATAVOID_COMPLETE_SHOWCASE.png)
-*All 5 core CorePulse techniques from DataCTE/CorePulse recreated with MLX*
+We've implemented a production-ready, upstream-friendly CorePulse system with **zero regression** when disabled and powerful effects when enabled.
 
-**Demonstrated Techniques:**
+### Working Effects Gallery
 
-#### 1. Token-Level Masking
-![Token Masking](artifacts/images/readme/DATAVOID_token_masking.png)
-*Mask 'cat' tokens while preserving 'playing at a park' context*
+#### Castle Enhancement
+![Working Castle](artifacts/images/readme/WORKING_baseline.png) ![Working Castle CorePulse](artifacts/images/readme/WORKING_corepulse.png)
+*Left: Baseline | Right: CorePulse with phase-based enhancement (25.30 avg pixel difference)*
 
-#### 2. Regional/Spatial Injection  
-![Regional Injection](artifacts/images/readme/DATAVOID_regional_injection.png)
-*Apply 'golden retriever dog' only to center, preserve park environment*
+#### Dreamlike Forest  
+![Dreamlike Baseline](artifacts/images/readme/SHOWCASE_DREAMLIKE_baseline.png) ![Dreamlike Effect](artifacts/images/readme/SHOWCASE_DREAMLIKE_effect.png)
+*Soft, dreamlike atmosphere through attention smoothing (27.69 avg difference)*
 
-#### 3. Attention Manipulation
-![Attention Boost](artifacts/images/readme/DATAVOID_attention_boost.png)
-*Boost attention on 'photorealistic' to enhance realism without changing prompt*
+#### Geometric Architecture
+![Geometric Baseline](artifacts/images/readme/SHOWCASE_GEOMETRIC_baseline.png) ![Geometric Effect](artifacts/images/readme/SHOWCASE_GEOMETRIC_effect.png)
+*Enhanced geometric structure with edge amplification (49.34 avg difference)*
 
-#### 4. Multi-Scale Control
-![Multi-Scale](artifacts/images/readme/DATAVOID_multiscale.png)
-*Gothic cathedral structure with intricate stone carving details*
+### Key Features
+- ✅ **Zero regression** when disabled (proven with identical output)
+- 🎯 **Opt-in activation** via `ATTN_HOOKS_ENABLED` flag
+- 🔧 **Protocol-based processors** for type safety
+- 🚀 **No monkey-patching** - proper seam integration
+- 📊 **Measurable effects** - 9-49 pixel average differences
 
-#### 5. Content/Style Separation
-![Content Style](artifacts/images/readme/DATAVOID_content_style.png)
-*Inject 'white cat' content while keeping garden context from original prompt*
+For complete documentation and more examples, see [COREPULSE_README.md](COREPULSE_README.md).
 
-### 🔥 EXPERIMENTAL POWER SHOWCASE
+## 📊 Performance Metrics
 
-![CorePulse Experimental Power](artifacts/images/readme/POWER_SHOWCASE.png)
-*Nine experimental trajectories demonstrating extreme CorePulse control dimensions*
+| Technique | Avg Pixel Difference | Visual Impact | Use Case |
+|-----------|---------------------|---------------|----------|
+| **Prompt Injection** | 29.96 | Strong content replacement | Swap subjects while keeping scene |
+| **Token Masking** | 26.10 | Selective attention control | Remove specific concepts |
+| **Regional Injection** | 22.83 | Localized modifications | Edit specific regions |
+| **Attention Manipulation** | 0.76-6.52 | Subtle to moderate | Fine-tune focus |
+| **Multi-Scale Control** | 6.52 | Structural changes | Independent structure/detail control |
 
-**Demonstrated Control Dimensions:**
-- **3x Style Boost**: Extreme output block amplification creating surreal effects
-- **90% Structure Decay**: Near-complete dissolution of input blocks  
-- **Attention Inversion**: Negative attention weights creating inverse patterns
-- **Chaos Mode**: Chaotic oscillating control with unpredictable dynamics
-- **Edge Isolation**: Selective amplification of boundary blocks only
-- **Time Evolution**: Progressive timestep-based transformation
-- **Extreme Mix**: Combined multi-effect processing with layered manipulations
-- **99% Suppression**: Almost complete attention suppression except final layers
+## 🏗️ Architecture
 
-### Previous Visual Demonstrations
+Following Clean Architecture principles:
 
-![Chaotic Timestep Control](artifacts/images/readme/PROOF_chaotic_timestep.png)
-*Left: Standard diffusion | Right: Chaotic timestep-varying attention control*
+```
+corepulse-mlx/
+├── src/
+│   ├── core/
+│   │   ├── domain/                    # Pure business logic
+│   │   ├── application/               # Use cases & orchestration
+│   │   └── infrastructure/            # Technical implementations
+│   └── adapters/
+│       ├── mlx/                       # MLX framework adapter
+│       │   └── mlx-examples/
+│       │       └── stable_diffusion/
+│       │           ├── attn_hooks.py  # Attention hook system
+│       │           └── unet.py        # Modified UNet with hooks
+│       └── stable_diffusion/          # SD integration adapter
+```
 
-![Attention Inversion](artifacts/images/readme/PROOF_inverted_attention.png)
-*Left: Normal attention | Right: Inverted attention weights (-80% + 1.0)*
+## 🔬 Technical Details
 
-Browse `artifacts/images/` for extensive visual demonstrations:
-- 200+ comparison images showing before/after effects
-- Test results across different techniques
-- Proof of concepts and validation
+### Hook Integration Points
 
-## License
+```
+UNet Architecture:
+├── down_blocks (0, 1, 2) - Structure/Composition
+│   └── TransformerBlocks → attention hooks
+├── mid_block - Content/Subject
+│   └── TransformerBlock → attention hooks
+└── up_blocks (0, 1, 2) - Style/Details
+    └── TransformerBlocks → attention hooks
+```
 
-MIT License
+### Metadata Available to Processors
 
-## About
+```python
+meta = {
+    'block_id': str,     # e.g., "down_0", "mid", "up_2"
+    'layer_idx': int,    # Layer within block
+    'step_idx': int,     # Current denoising step
+    'sigma': float       # Current noise level
+}
+```
 
-CorePulse-MLX brings advanced diffusion control to Apple Silicon, optimized for MLX framework performance. Built with Clean Architecture principles for maintainability and extensibility.
+## 🤝 Contributing
+
+This implementation follows upstream-friendly principles:
+- No monkey-patching
+- Opt-in by default
+- Zero regression when disabled
+- Clear protocol interfaces
+- Comprehensive documentation
+
+## 📄 License
+
+MIT License - See LICENSE file for details
+
+## 🙏 Acknowledgments
+
+- MLX team for the excellent framework
+- Stable Diffusion community for inspiration
+- CorePulse original concept by DataVoid
+
+---
+
+**Note**: This is a clean-room implementation designed for upstream integration with MLX Stable Diffusion. All hooks are disabled by default for zero regression.
