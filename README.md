@@ -280,4 +280,46 @@ MIT License - See LICENSE file for details
 
 ---
 
+## 🖼️ Real-World Use Case Gallery
+
+![Complete Use Cases Gallery](artifacts/images/USE_CASES_GALLERY.png)
+
+### Visual Examples Showcase
+
+#### E-Commerce Product Variations
+![E-Commerce Example](artifacts/images/use_cases/01_ECOMMERCE_PRODUCT.png)
+*Generate product variations without new photoshoots - 99% cost savings*
+
+#### Architecture Seasonal Visualization
+![Architecture Example](artifacts/images/use_cases/02_ARCHITECTURE_SEASONS.png)
+*Show buildings in different seasons - 1 week → 2 hours*
+
+#### Fashion Garment Focus
+![Fashion Example](artifacts/images/use_cases/03_FASHION_FOCUS.png)
+*Emphasize clothing while minimizing model influence*
+
+#### Game Asset Variations
+![Game Assets Example](artifacts/images/use_cases/04_GAME_ASSETS.png)
+*Rapid environment prototyping with biome variations*
+
+#### Medical Visualization
+![Medical Example](artifacts/images/use_cases/05_MEDICAL_HIGHLIGHT.png)
+*Selective anatomical highlighting for education*
+
+#### Marketing Localization
+![Marketing Example](artifacts/images/use_cases/06_MARKETING_LOCAL.png)
+*Cultural adaptation for global campaigns*
+
+#### Interior Design Styles
+![Interior Design Example](artifacts/images/use_cases/07_INTERIOR_STYLES.png)
+*Visualize rooms in different design aesthetics*
+
+#### Film Storyboard Progression
+![Storyboard Example](artifacts/images/use_cases/08_STORYBOARD.png)
+*Progressive scene transformation for preproduction*
+
+See [USE_CASES.md](USE_CASES.md) for detailed implementation examples and ROI calculations.
+
+---
+
 **Note**: This is a clean-room implementation designed for upstream integration with MLX Stable Diffusion. All hooks are disabled by default for zero regression.
