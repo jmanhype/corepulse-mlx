@@ -245,6 +245,20 @@ meta = {
 }
 ```
 
+## 💼 Real-World Use Cases
+
+CorePulse-MLX enables practical applications across industries:
+
+### Quick Examples
+- **E-Commerce**: Generate product variations without new photoshoots (99% cost savings)
+- **Real Estate**: Show properties in different seasons/times (1 week → 2 hours)
+- **Fashion**: Focus on garments while minimizing model influence
+- **Gaming**: Rapid environment prototyping with consistent art style
+- **Medical**: Highlight specific anatomical features for education
+- **Marketing**: Localize campaigns for different cultural markets
+
+See [USE_CASES.md](USE_CASES.md) for detailed examples, code snippets, and ROI calculations.
+
 ## 🤝 Contributing
 
 This implementation follows upstream-friendly principles:
