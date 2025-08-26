@@ -2,7 +2,7 @@
 
 A modular toolkit for advanced diffusion model manipulation on Apple Silicon, providing unprecedented control over how Stable Diffusion processes and interprets your prompts.
 
-![CorePulse Features](artifacts/images/readme/PROPER_COREPULSE_SHOWCASE.png)
+![CorePulse Features](artifacts/images/readme/REAL_EFFECTS_SHOWCASE.png)
 
 ## Core Concepts
 
