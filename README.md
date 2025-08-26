@@ -84,24 +84,49 @@ latents = sd.generate_latents(
 - `proper_fix_00.png`, `proper_fix_01.png` - Visual proof comparisons
 - `fixed_demo.log` - Complete test results
 
-## 🏗️ Repository Structure
+## 🏗️ Clean Architecture Structure
+
+Following Uncle Bob's Clean Architecture principles:
 
 ```
 corepulse-mlx/
-├── mlx-examples/stable_diffusion/      # Modified MLX SD with hooks
-│   └── stable_diffusion/
-│       ├── attn_hooks.py              # Zero-regression attention system
-│       ├── sigma_hooks.py             # Denoising progress tracking  
-│       ├── unet.py                    # Modified UNet with hook support
-│       └── sampler.py                 # Modified sampler integration
-├── corepulse_proper_fix.py            # 🎯 THE solution (CFG 12.0)
-├── corepulse_stabilized.py            # Gentle enhancement system
-├── proper_fix_*.png                   # Visual proof comparisons  
-├── investigate_prompt_drift.py        # Diagnosis of SD 2.1 issues
-├── corpus_mlx/                        # Modular wrapper system
-├── tests/                             # Comprehensive test suite
-└── 200+ demo/test files               # Extensive validation
+├── src/
+│   ├── core/
+│   │   ├── domain/                    # 🎯 Pure business logic
+│   │   │   ├── attention.py           # Attention domain models
+│   │   │   ├── injection.py           # Injection business rules  
+│   │   │   └── masks.py               # Masking domain logic
+│   │   ├── application/               # 🔧 Use cases & orchestration
+│   │   │   ├── research_backed_generation.py  # THE solution (CFG 12.0)
+│   │   │   └── stabilized_generation.py       # Gentle enhancement
+│   │   └── infrastructure/            # 💾 Technical implementations
+│   └── adapters/                      # 🔌 External system integrations
+│       ├── mlx/                       # MLX framework adapter
+│       │   └── mlx-examples/stable_diffusion/
+│       │       └── stable_diffusion/
+│       │           ├── attn_hooks.py  # Zero-regression hooks
+│       │           └── sigma_hooks.py # Timing control
+│       └── stable_diffusion/          # SD integration adapter
+├── tests/
+│   ├── unit/                          # Unit tests
+│   ├── integration/                   # Integration tests  
+│   └── e2e/                          # End-to-end tests
+├── docs/
+│   ├── examples/                      # Demo scripts & tutorials
+│   └── research/                      # Research findings
+├── artifacts/
+│   ├── images/                        # Visual proof comparisons
+│   ├── logs/                          # Test execution logs
+│   └── configs/                       # Configuration files
+└── README.md
 ```
+
+### 🏛️ Architecture Principles
+
+- **Domain Layer**: Pure business logic, no dependencies
+- **Application Layer**: Use cases that orchestrate domain objects  
+- **Adapters Layer**: Interface with external systems (MLX, SD)
+- **Infrastructure Layer**: Technical implementation details
 
 ## License
 
