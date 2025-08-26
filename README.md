@@ -28,6 +28,14 @@ We discovered and fixed why SD 2.1-base was ignoring prompts:
 - **Perfect prompt adherence** when configured properly
 - **309 files** of implementation, tests, and visual proof
 
+### Visual Proof
+
+![CorePulse-MLX Visual Proof](artifacts/images/README_VISUAL_PROOF.png)
+*Complete visual validation of the CFG 12.0 breakthrough*
+
+![Before/After Comparison](artifacts/images/README_BEFORE_AFTER.png)
+*Direct comparison: CFG 7.5 (wrong) vs CFG 12.0 (fixed)*
+
 ## 💡 Core Implementation
 
 ### Zero-Regression Attention Hooks
@@ -77,12 +85,13 @@ latents = sd.generate_latents(
 
 ## 📁 Key Files
 
-- `corepulse_proper_fix.py` - Research-backed CFG fix (THE solution)
-- `corepulse_stabilized.py` - Gentle enhancement system  
-- `mlx-examples/stable_diffusion/stable_diffusion/attn_hooks.py` - Zero-regression hooks
-- `mlx-examples/stable_diffusion/stable_diffusion/sigma_hooks.py` - Timing control
-- `proper_fix_00.png`, `proper_fix_01.png` - Visual proof comparisons
-- `fixed_demo.log` - Complete test results
+- `src/core/application/research_backed_generation.py` - Research-backed CFG fix (THE solution)
+- `src/core/application/stabilized_generation.py` - Gentle enhancement system  
+- `src/adapters/mlx/mlx-examples/stable_diffusion/stable_diffusion/attn_hooks.py` - Zero-regression hooks
+- `src/adapters/mlx/mlx-examples/stable_diffusion/stable_diffusion/sigma_hooks.py` - Timing control
+- `artifacts/images/proper_fix_*.png` - Visual proof comparisons
+- `artifacts/images/README_*.png` - Comparison grids
+- `artifacts/logs/fixed_demo.log` - Complete test results
 
 ## 🏗️ Clean Architecture Structure
 
