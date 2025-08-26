@@ -1,97 +1,134 @@
 # CorePulse-MLX
 
-CorePulse V4 DataVoid techniques for MLX Stable Diffusion on Apple Silicon.
+A modular toolkit for advanced diffusion model manipulation on Apple Silicon, providing unprecedented control over how Stable Diffusion processes and interprets your prompts.
 
-## 🎯 What We Built
+![CorePulse Features](artifacts/images/corepulse/COREPULSE_FEATURES_SHOWCASE.png)
 
-Complete implementation of CorePulse attention manipulation system that **actually works**:
+## Core Concepts
 
-- **Zero-regression attention hooks** with protocol-based processors 
-- **Sigma-based timing control** (early/mid/late structure/content/detail)  
-- **Block-level targeting** (down/middle/up blocks in UNet)
-- **Gentle enhancement multipliers** (×1.05-1.15) for stability
-- **Research-backed CFG fixes** for SD 2.1-base prompt adherence
+### 🎯 Prompt Injection
+Inject different prompts into specific architectural blocks of the UNet during generation. This allows you to control different aspects of your image:
 
-## 🔬 Research Breakthrough
+- **Content blocks** (middle layers) → What appears in your image
+- **Style blocks** (output layers) → How it looks and feels  
+- **Composition blocks** (input layers) → Overall layout and structure
 
-We discovered and fixed why SD 2.1-base was ignoring prompts:
+![Prompt Injection Demo](artifacts/images/corepulse/prompt_injection_demo.png)
 
-**Before Fix:** "red Ferrari sports car" → random bedrooms/landscapes  
-**After Fix:** "red Ferrari sports car" → **actually generates red Ferrari!** 🏎️
+### 🎭 Token-Level Attention Masking
+Control which parts of your prompt have influence by masking attention to specific tokens/words. This is different from spatial masking - it works at the linguistic level rather than image regions.
 
-**Solution:** CFG scale 12.0+ (not 7.5) + detailed prompts with style keywords
+- **Selective attention** → Choose which words in your prompt get processed
+- **Token-level control** → Fine-grained control over prompt interpretation
+- **Linguistic precision** → Target specific concepts without changing prompt text
 
-## 🚀 Proven Results
+*Example: In "a cat playing at a park", mask attention to "cat" tokens while preserving attention to "playing at a park"*
 
-- **7-10% quality improvements** consistently
-- **No semantic drift** or oscillations  
-- **Perfect prompt adherence** when configured properly
-- **309 files** of implementation, tests, and visual proof
+### 🗺️ Regional/Spatial Injection
+Apply prompt injections only to specific regions of the image using spatial masks. This enables surgical control over different areas of your image.
 
-### Visual Proof
+- **Targeted replacement** → Change specific image regions while preserving context
+- **Spatial precision** → Control exactly where changes occur
+- **Context preservation** → Background and surroundings remain untouched
 
-![CorePulse-MLX Visual Proof](artifacts/images/README_VISUAL_PROOF.png)
-*Complete visual validation of the CFG 12.0 breakthrough*
+![Regional Injection Demo](artifacts/images/corepulse/regional_injection_demo.png)
 
-![Before/After Comparison](artifacts/images/README_BEFORE_AFTER.png)
-*Direct comparison: CFG 7.5 (wrong) vs CFG 12.0 (fixed)*
+### ⚡ Attention Manipulation
+Control how much the model focuses on specific words in your prompt by directly modifying attention weights. Unlike changing the prompt text, this amplifies or reduces the model's internal focus on existing words.
 
-## 💡 Core Implementation
+- **Amplify attention** (>1.0) → Make the model pay more attention to specific words
+- **Reduce attention** (<1.0) → Decrease focus on certain words
+- **Spatial control** → Apply attention changes only to specific image regions
 
-### Zero-Regression Attention Hooks
+![Attention Manipulation Demo](artifacts/images/corepulse/attention_manipulation_demo.png)
 
+### 🏗️ Multi-Scale Control
+Apply different prompts to different resolution levels of the UNet architecture. This approach lets you control structure and details independently:
+
+- **Structure Level** (lowest resolution) → Overall composition, global layout
+- **Mid-Level** (medium resolution) → Regional features, object relationships
+- **Detail Level** (highest resolution) → Fine textures, surface details
+
+![Multi-Scale Control Demo](artifacts/images/corepulse/multiscale_control_demo.png)
+
+## Technical Features
+
+- **🔧 Multi-Architecture Support**: MLX-optimized for Apple Silicon (M1/M2/M3)
+- **🎯 Block-Level Control**: Target specific UNet blocks (input, middle, output)
+- **📐 Flexible Interfaces**: Simple one-liners to advanced multi-block configurations  
+- **🔌 Seamless Integration**: Drop-in compatibility with MLX Stable Diffusion
+- **🧹 Context Management**: Automatic patch cleanup with Python context managers
+- **⏱️ Precise Timing Control**: Sigma-based injection windows for optimal effect
+- **🚫 Zero-Regression Hooks**: Disabled by default for zero performance impact
+
+## Quick Examples
+
+### Prompt Injection: Content/Style Separation
 ```python
-# mlx-examples/stable_diffusion/stable_diffusion/attn_hooks.py
 from stable_diffusion import attn_hooks
 
-# Enable hooks system (zero performance impact when disabled)
+# Enable hooks and inject different content while keeping scene
 attn_hooks.enable_hooks()
 
-# Register processors for specific UNet blocks
-class GentleProcessor:
+class ContentInjector:
     def __call__(self, *, out=None, meta=None):
-        sigma = meta.get('sigma', 0.0) if meta else 0.0
-        if sigma > 10:      # Early: structure
-            return out * 1.05
-        elif sigma > 5:     # Mid: content  
-            return out * 1.08
-        else:              # Late: details
-            return out * 1.10
+        # Inject "white cat" into content blocks
+        if meta.get('block_type') == 'middle':
+            return self.inject_content(out, "white cat")
+        return out
 
-processor = GentleProcessor()
-attn_hooks.register_processor('down_1', processor)
-attn_hooks.register_processor('mid', processor)  
-attn_hooks.register_processor('up_1', processor)
+processor = ContentInjector()
+attn_hooks.register_processor('middle', processor)
+
+# Base prompt provides context, injection overrides content  
+# Result: White cat in garden (content replaced, context preserved)
 ```
 
-### Research-Backed Generation
-
+### Regional/Spatial Injection: Surgical Precision
 ```python
-# corepulse_proper_fix.py - The solution that actually works
-from stable_diffusion import StableDiffusion
+from src.core.domain import masks
 
-sd = StableDiffusion("stabilityai/stable-diffusion-2-1-base", float16=True)
+# Create a spatial mask for the region you want to modify
+mask = masks.create_center_circle_mask(size=(1024, 1024), radius=300)
 
-# Critical: Use CFG 12.0+ and detailed prompts
-latents = sd.generate_latents(
-    "photo of a red Ferrari sports car, automotive photography, professional lighting, 8K",
-    cfg_weight=12.0,  # NOT 7.5!
-    num_steps=20,
-    seed=42
-)
-
-# Result: Actually generates a red Ferrari! 🎉
+# Apply "golden retriever dog" only to masked region
+# The mask ensures only the center region changes
+# Result: Dog in center, park environment perfectly preserved
 ```
 
-## 📁 Key Files
+### Attention Manipulation: Focus Control  
+```python
+from stable_diffusion import attn_hooks
 
-- `src/core/application/research_backed_generation.py` - Research-backed CFG fix (THE solution)
-- `src/core/application/stabilized_generation.py` - Gentle enhancement system  
-- `src/adapters/mlx/mlx-examples/stable_diffusion/stable_diffusion/attn_hooks.py` - Zero-regression hooks
-- `src/adapters/mlx/mlx-examples/stable_diffusion/stable_diffusion/sigma_hooks.py` - Timing control
-- `artifacts/images/proper_fix_*.png` - Visual proof comparisons
-- `artifacts/images/README_*.png` - Comparison grids
-- `artifacts/logs/fixed_demo.log` - Complete test results
+class AttentionBooster:
+    def __call__(self, *, out=None, meta=None):
+        # Boost attention on "photorealistic" by 5x
+        if "photorealistic" in meta.get('tokens', []):
+            return out * 5.0
+        return out
+
+# Same prompt, but model focuses much more on making it photorealistic
+```
+
+### Multi-Scale Control: Structure + Details
+```python
+# Control structure and details independently
+structure_prompt = "gothic cathedral silhouette, imposing architecture"
+detail_prompt = "weathered stone, intricate carvings, moss-covered surfaces"
+
+# Apply to different resolution levels
+# Result: Gothic cathedral structure with detailed stone textures
+```
+
+## When to Use Which Technique
+
+| Technique | Use When | Example |
+|-----------|----------|---------|
+| **Prompt Injection** | You want to replace/add content while keeping context | Generate a cat in a dog scene |
+| **Token Masking** | You want to selectively ignore parts of your prompt | Mask "cat" tokens, keep "park" |
+| **Regional Injection** | You want surgical precision in specific regions | Replace center only |
+| **Attention Manipulation** | You want to emphasize existing words more | Boost "photorealistic" |
+| **Multi-Scale Control** | You want different structure and details | Castle structure + stone details |
 
 ## 🏗️ Clean Architecture Structure
 
@@ -106,37 +143,63 @@ corepulse-mlx/
 │   │   │   ├── injection.py           # Injection business rules  
 │   │   │   └── masks.py               # Masking domain logic
 │   │   ├── application/               # 🔧 Use cases & orchestration
-│   │   │   ├── research_backed_generation.py  # THE solution (CFG 12.0)
+│   │   │   ├── research_backed_generation.py  # Advanced generation
 │   │   │   └── stabilized_generation.py       # Gentle enhancement
 │   │   └── infrastructure/            # 💾 Technical implementations
 │   └── adapters/                      # 🔌 External system integrations
 │       ├── mlx/                       # MLX framework adapter
-│       │   └── mlx-examples/stable_diffusion/
-│       │       └── stable_diffusion/
-│       │           ├── attn_hooks.py  # Zero-regression hooks
-│       │           └── sigma_hooks.py # Timing control
 │       └── stable_diffusion/          # SD integration adapter
-├── tests/
-│   ├── unit/                          # Unit tests
-│   ├── integration/                   # Integration tests  
-│   └── e2e/                          # End-to-end tests
-├── docs/
-│   ├── examples/                      # Demo scripts & tutorials
-│   └── research/                      # Research findings
-├── artifacts/
-│   ├── images/                        # Visual proof comparisons
-│   ├── logs/                          # Test execution logs
-│   └── configs/                       # Configuration files
-└── README.md
 ```
 
-### 🏛️ Architecture Principles
+## Installation
 
-- **Domain Layer**: Pure business logic, no dependencies
-- **Application Layer**: Use cases that orchestrate domain objects  
-- **Adapters Layer**: Interface with external systems (MLX, SD)
-- **Infrastructure Layer**: Technical implementation details
+```bash
+# Clone the repository
+git clone https://github.com/jmanhype/corepulse-mlx.git
+cd corepulse-mlx
+
+# Install dependencies (MLX optimized for Apple Silicon)
+pip install -r requirements.txt
+```
+
+## Advanced Usage
+
+CorePulse-MLX offers multiple levels of control:
+
+### Interfaces by Complexity
+- **SimpleInjector** → One-liner injection for quick experiments
+- **AdvancedInjector** → Multi-block, multi-prompt configurations
+- **MultiScaleController** → Resolution-aware structure/detail control
+- **AttentionManipulator** → Precise attention weight control
+- **RegionalController** → Spatial masks for region-specific control
+
+### Architecture Components
+- **UNetPatcher** → Low-level UNet modification engine
+- **BlockMapper** → Automatic block detection for any model
+- **InjectionProcessor** → Custom attention processors with sigma timing
+- **Utilities** → Auto-detection, validation, convenience functions
+
+## Real-World Examples
+
+Explore the `docs/examples/` directory for complete implementations:
+
+- **Content/Style Split** → Generate a cat with oil painting style
+- **Token Masking** → Selective prompt token control
+- **Regional Control** → Left half: crystal castle, Right half: fire dragon
+- **Attention Boost** → Amplify "photorealistic" for enhanced realism
+- **Multi-Scale** → Medieval fortress structure + weathered stone details
+
+## Visual Proof Gallery
+
+Browse `artifacts/images/` for extensive visual demonstrations:
+- 200+ comparison images showing before/after effects
+- Test results across different techniques
+- Proof of concepts and validation
 
 ## License
 
-MIT
+MIT License
+
+## About
+
+CorePulse-MLX brings advanced diffusion control to Apple Silicon, optimized for MLX framework performance. Built with Clean Architecture principles for maintainability and extensibility.
