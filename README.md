@@ -2,7 +2,7 @@
 
 A modular toolkit for advanced diffusion model manipulation on Apple Silicon, providing unprecedented control over how Stable Diffusion processes and interprets your prompts.
 
-![CorePulse Features](artifacts/images/readme/COREPULSE_SHOWCASE.png)
+![CorePulse Features](artifacts/images/readme/REAL_COREPULSE_SHOWCASE.png)
 
 ## Core Concepts
 
@@ -13,7 +13,7 @@ Inject different prompts into specific architectural blocks of the UNet during g
 - **Style blocks** (output layers) → How it looks and feels  
 - **Composition blocks** (input layers) → Overall layout and structure
 
-![Prompt Injection Demo](artifacts/images/readme/prompt_injection_demo.png)
+![Prompt Injection Demo](artifacts/images/readme/REAL_prompt_injection.png)
 
 ### 🎭 Token-Level Attention Masking
 Control which parts of your prompt have influence by masking attention to specific tokens/words. This is different from spatial masking - it works at the linguistic level rather than image regions.
@@ -31,7 +31,7 @@ Apply prompt injections only to specific regions of the image using spatial mask
 - **Spatial precision** → Control exactly where changes occur
 - **Context preservation** → Background and surroundings remain untouched
 
-![Regional Injection Demo](artifacts/images/readme/regional_control_demo.png)
+![Regional Injection Demo](artifacts/images/readme/REAL_regional_control.png)
 
 ### ⚡ Attention Manipulation
 Control how much the model focuses on specific words in your prompt by directly modifying attention weights. Unlike changing the prompt text, this amplifies or reduces the model's internal focus on existing words.
@@ -40,7 +40,7 @@ Control how much the model focuses on specific words in your prompt by directly 
 - **Reduce attention** (<1.0) → Decrease focus on certain words
 - **Spatial control** → Apply attention changes only to specific image regions
 
-![Attention Manipulation Demo](artifacts/images/readme/attention_manipulation_demo.png)
+![Attention Manipulation Demo](artifacts/images/readme/REAL_attention_manipulation.png)
 
 ### 🏗️ Multi-Scale Control
 Apply different prompts to different resolution levels of the UNet architecture. This approach lets you control structure and details independently:
@@ -49,7 +49,7 @@ Apply different prompts to different resolution levels of the UNet architecture.
 - **Mid-Level** (medium resolution) → Regional features, object relationships
 - **Detail Level** (highest resolution) → Fine textures, surface details
 
-![Multi-Scale Control Demo](artifacts/images/readme/multiscale_control_demo.png)
+![Multi-Scale Control Demo](artifacts/images/readme/REAL_multiscale_control.png)
 
 ## Technical Features
 
