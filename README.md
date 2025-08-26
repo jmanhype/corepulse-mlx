@@ -191,6 +191,29 @@ Explore the `docs/examples/` directory for complete implementations:
 
 ## Visual Proof Gallery
 
+### 🔥 EXPERIMENTAL POWER SHOWCASE
+
+![CorePulse Experimental Power](artifacts/images/readme/POWER_SHOWCASE.png)
+*Nine experimental trajectories demonstrating extreme CorePulse control dimensions*
+
+**Demonstrated Control Dimensions:**
+- **3x Style Boost**: Extreme output block amplification creating surreal effects
+- **90% Structure Decay**: Near-complete dissolution of input blocks  
+- **Attention Inversion**: Negative attention weights creating inverse patterns
+- **Chaos Mode**: Chaotic oscillating control with unpredictable dynamics
+- **Edge Isolation**: Selective amplification of boundary blocks only
+- **Time Evolution**: Progressive timestep-based transformation
+- **Extreme Mix**: Combined multi-effect processing with layered manipulations
+- **99% Suppression**: Almost complete attention suppression except final layers
+
+### Previous Visual Demonstrations
+
+![Chaotic Timestep Control](artifacts/images/readme/PROOF_chaotic_timestep.png)
+*Left: Standard diffusion | Right: Chaotic timestep-varying attention control*
+
+![Attention Inversion](artifacts/images/readme/PROOF_inverted_attention.png)
+*Left: Normal attention | Right: Inverted attention weights (-80% + 1.0)*
+
 Browse `artifacts/images/` for extensive visual demonstrations:
 - 200+ comparison images showing before/after effects
 - Test results across different techniques
