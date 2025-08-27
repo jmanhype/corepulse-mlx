@@ -1,5 +1,6 @@
 """
 CorePulse main wrapper - the primary interface for all CorePulse functionality.
+Refactored to follow Single Responsibility Principle.
 """
 
 import mlx.core as mx
@@ -8,6 +9,8 @@ from .injection import PromptInjector, InjectionConfig
 from .utils import KVRegistry
 from .masks import RegionalControl, AttentionMask
 from .blending import EmbeddingBlender, AttentionBlender, BlendMode
+from .manipulators import AttentionManipulator
+from .hooks import HookFactory
 
 
 class CorePulse:
@@ -28,7 +31,10 @@ class CorePulse:
         self.regional_control = RegionalControl()
         self.attention_blender = AttentionBlender()
         self.embedding_blender = EmbeddingBlender()
+        self.attention_manipulator = AttentionManipulator(self.kv_registry)
+        self.hook_factory = HookFactory()
         self._hooks_installed = False
+        self._active_technique = None
         
     def set_model(self, model):
         """Set or update the base model.
@@ -83,6 +89,7 @@ class CorePulse:
             
         # Store blend mode
         self._blend_mode = BlendMode[blend_mode.upper()]
+        self._active_technique = "injection"
         
     def add_regional_prompt(
         self,
@@ -219,6 +226,118 @@ class CorePulse:
         self.kv_registry.clear()
         self.regional_control.clear_regions()
         self._hooks_installed = False
+        self._active_technique = None
+    
+    # ============= CORE TECHNIQUES FROM TEST FILES =============
+    
+    def amplify(self, strength: float = 5.0, blocks: Optional[List[str]] = None):
+        """Amplify attention (like test_amplification.py).
+        
+        Args:
+            strength: Amplification factor (1.0 = normal, 5.0 = 5x stronger)
+            blocks: Target blocks (default: all)
+        """
+        self.attention_manipulator.amplify(strength, blocks)
+        self._active_technique = "amplification"
+        return self
+    
+    def suppress(self, factor: float = 0.05, blocks: Optional[List[str]] = None):
+        """Suppress attention (like test_suppression.py).
+        
+        Args:
+            factor: Suppression factor (0.05 = 95% reduction)
+            blocks: Target blocks
+        """
+        self.attention_manipulator.suppress(factor, blocks)
+        self._active_technique = "suppression"
+        return self
+    
+    def chaos(self, intensity: float = 2.0, blocks: Optional[List[str]] = None):
+        """Add chaos/noise (like test_chaos.py).
+        
+        Args:
+            intensity: Noise intensity
+            blocks: Target blocks
+        """
+        self.attention_manipulator.chaos(intensity, blocks)
+        self._active_technique = "chaos"
+        return self
+    
+    def invert(self, blocks: Optional[List[str]] = None):
+        """Invert attention (anti-prompt, like test_inversion.py).
+        
+        Args:
+            blocks: Target blocks
+        """
+        self.attention_manipulator.invert(blocks)
+        self._active_technique = "inversion"
+        return self
+    
+    def remove_tokens(self, token_range: tuple = (2, 5), blocks: Optional[List[str]] = None):
+        """Remove specific tokens (like test_token_removal.py).
+        
+        Args:
+            token_range: (start, end) tokens to remove
+            blocks: Target blocks
+        """
+        self.attention_manipulator.remove_tokens(token_range, blocks)
+        self._active_technique = "token_removal"
+        return self
+    
+    def progressive_strength(self, strengths: Dict[str, float]):
+        """Progressive manipulation across blocks (like test_progressive.py).
+        
+        Args:
+            strengths: Dict of block_name -> strength multiplier
+                      e.g. {"down_0": 0.2, "mid": 1.0, "up_2": 5.0}
+        """
+        self.attention_manipulator.progressive_strength(strengths)
+        self._active_technique = "progressive"
+        return self
+    
+    def isolate_attention_heads(self, head_indices: List[int], blocks: Optional[List[str]] = None):
+        """Isolate specific attention heads (like test_attention_head_isolation.py).
+        
+        Args:
+            head_indices: Which attention heads to keep active
+            blocks: Target blocks
+        """
+        self.attention_manipulator.isolate_attention_heads(head_indices, blocks)
+        self._active_technique = "head_isolation"
+        return self
+    
+    def frequency_domain_manipulation(self, freq_boost: float = 2.0, blocks: Optional[List[str]] = None):
+        """Frequency domain manipulation (like test_frequency_domain.py).
+        
+        Args:
+            freq_boost: How much to boost high frequencies
+            blocks: Target blocks
+        """
+        self.attention_manipulator.frequency_domain_manipulation(freq_boost, blocks)
+        self._active_technique = "frequency_domain"
+        return self
+    
+    def cross_attention_swap(self, swap_at_step: int = 10):
+        """Dynamic swapping during generation (like test_dynamic_swapping.py).
+        
+        Args:
+            swap_at_step: Step to swap at
+        """
+        self._swap_step = swap_at_step
+        self._step_counter = 0
+        
+        def swap_hook(q, k, v, meta=None):
+            if k.shape[2] < 100:
+                self._step_counter += 1
+                if self._step_counter > self._swap_step:
+                    # Swap by reversing
+                    return q, mx.flip(k, axis=2), mx.flip(v, axis=2)
+            return q, k, v
+        
+        for block in ["mid", "up_0", "up_1"]:
+            self.kv_registry.set(block, swap_hook)
+        self._active_technique = "dynamic_swap"
+        return self
         
     def create_progressive_injection(
         self,

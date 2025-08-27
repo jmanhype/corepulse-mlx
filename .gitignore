@@ -1,53 +1,55 @@
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.DS_Store
-.env
-.venv
-dist/
+*.py[cod]
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
+*.egg
 
-# External repositories
-CorePulse-LLM/
+# Virtual Environment
+venv/
+ENV/
+env/
 
-# MLX/ML Model files
-*.ckpt
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+artifacts/images/*/
+logs/*.log
+.claude/
+.claude-flow/
+*.webp
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Archives
+archive/
+tests/archive/
+docs/archive/
+scripts/demos/
+logs/archive/
+
+# MLX
+*.mlx
 *.safetensors
-*.bin
-*.pth
-weights/
-checkpoints/
-models/
-
-# Artifacts and test outputs - THE BIG PROBLEM
-artifacts/images/readme/*.png
-artifacts/images/test/
-artifacts/images/temp/
-*.log
-logs/
-
-# Keep only essential demo images
-!artifacts/images/essential/
-
-# Test outputs that shouldn't be committed
-test_*.png
-debug_*.png
-temp_*.png
-*_showcase.png
-*_SHOWCASE.png
-
-# Python test scripts (keep only final versions)
-test_*.py
-debug_*.py
-simple_*.py
-extreme_*.py
-comprehensive_*.py
-corepulse_showcase*.py
-semantic_*.py
-advanced_*.py
-final_*.py
-fixed_*.py
-working_*.py
-token_masking*.py
-full_*.py
