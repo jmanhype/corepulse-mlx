@@ -91,19 +91,51 @@ class CorePulseStableDiffusion:
         
         # Generate with the base model
         # The hooks will automatically apply during generation
-        result = self.model.generate(
-            prompt=prompt,
-            negative_prompt=negative_prompt,
-            num_inference_steps=num_inference_steps,
-            guidance_scale=guidance_scale,
-            seed=seed,
+        import mlx.core as mx
+        import numpy as np
+        
+        # Set seed if provided
+        if seed is not None:
+            mx.random.seed(seed)
+            np.random.seed(seed)
+        
+        # Generate latents (returns a generator)
+        latents_generator = self.model.generate_latents(
+            text=prompt,
+            n_images=1,
+            num_steps=num_inference_steps,
+            cfg_weight=guidance_scale,
+            negative_text=negative_prompt,
             **kwargs
         )
+        
+        # Get the final latents from the generator
+        for step, latents_step in enumerate(latents_generator):
+            # Update step counter
+            self.injector.step()
+            final_latents = latents_step
+        
+        # Decode to image
+        result = self.model.decode(final_latents)
+        mx.eval(result)
+        
+        # Convert to PIL Image
+        from PIL import Image
+        import numpy as np
+        
+        # Result is [batch, height, width, channels]
+        img_array = np.array(result[0])
+        
+        # Convert from [-1, 1] to [0, 255]
+        img_array = ((img_array + 1.0) * 127.5).astype(np.uint8)
+        
+        # Create PIL Image
+        image = Image.fromarray(img_array)
         
         # Update step counter if needed
         # This would integrate with the denoising loop
         
-        return result
+        return image
     
     def clear_injections(self):
         """Clear all injection configurations."""
