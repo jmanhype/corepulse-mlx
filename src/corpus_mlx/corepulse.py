@@ -27,7 +27,18 @@ class CorePulse:
         """
         self.model = base_model
         self.injector = PromptInjector(base_model) if base_model else None
-        self.kv_registry = KVRegistry()
+        
+        # Use the GLOBAL KV_REGISTRY from attn_scores!
+        try:
+            from stable_diffusion import attn_scores
+            # CRITICAL: Enable KV hooks so PatchedMHA is used!
+            attn_scores.enable_kv_hooks(True)
+            print("✅ Enabled KV hooks for PatchedMHA")
+            self.kv_registry = attn_scores.KV_REGISTRY
+        except:
+            # Fallback for testing
+            self.kv_registry = KVRegistry()
+            
         self.regional_control = RegionalControl()
         self.attention_blender = AttentionBlender()
         self.embedding_blender = EmbeddingBlender()
@@ -78,6 +89,10 @@ class CorePulse:
         
         # Add to injector
         self.injector.add_injection(config)
+        
+        # Apply hooks immediately
+        self.injector.apply_hooks(self.kv_registry)
+        self._hooks_installed = True
         
         # Handle regional control if specified
         if region:

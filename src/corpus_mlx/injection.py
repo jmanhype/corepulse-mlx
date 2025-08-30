@@ -19,7 +19,7 @@ class InjectionConfig:
         end_step: Optional[int] = None
     ):
         self.inject_prompt = inject_prompt
-        self.strength = min(max(strength, 0.1), 0.5)  # Clamp to safe range
+        self.strength = min(max(strength, 0.1), 2.0)  # Allow up to 2.0 for semantic replacement
         self.blocks = blocks or ['mid', 'up_0', 'up_1']
         self.start_step = start_step
         self.end_step = end_step
@@ -40,10 +40,17 @@ class PromptInjector:
     def create_injection_hook(self, config: InjectionConfig) -> Callable:
         """Create a hook function for injection."""
         # Get conditioning for injection prompt
-        inject_cond, _ = self.model._get_text_conditioning(config.inject_prompt)
+        # StableDiffusionXL returns (conditioning, pooled_conditioning)
+        inject_result = self.model._get_text_conditioning(config.inject_prompt)
+        
+        # Handle both SD and SDXL formats
+        if isinstance(inject_result, tuple):
+            inject_cond = inject_result[0]  # Main conditioning
+        else:
+            inject_cond = inject_result
         
         def hook(q, k, v, meta=None):
-            # Only modify cross-attention layers
+            # Only modify cross-attention layers (text conditioning)
             if k.shape[2] < 100 and k.shape[2] == v.shape[2]:
                 block_id = meta.get('block_id', 'unknown')
                 
@@ -59,19 +66,34 @@ class PromptInjector:
                 
                 batch, heads, seq_len, dim = v.shape
                 
-                # Apply injection with safe scaling
-                if seq_len >= inject_cond.shape[1]:
-                    embed_len = min(seq_len, inject_cond.shape[1])
-                    embed_dim = min(dim, inject_cond.shape[2])
-                    inject_vals = inject_cond[0, :embed_len, :embed_dim]
+                # CRITICAL FIX: The conditioning needs to be properly projected
+                # inject_cond shape: (batch, seq_len, 2048)
+                # v shape: (batch, heads, seq_len, dim=64)
+                
+                # Method from working test: direct replacement of text tokens
+                if seq_len >= 77:  # Standard CLIP token length
+                    v_modified = mx.array(v)  # Copy first
                     
-                    # Linear interpolation for safe blending
-                    v_modified = mx.array(v)
-                    for b in range(batch):
-                        for h in range(heads):
-                            v_modified[b, h, :embed_len, :embed_dim] = \
-                                v[b, h, :embed_len, :embed_dim] * (1 - config.strength) + \
-                                inject_vals * config.strength
+                    # Replace text tokens (first 77) with injection
+                    text_tokens = min(77, inject_cond.shape[1])
+                    
+                    # Project conditioning to match V dimensions
+                    # Take first 'dim' dimensions from the 2048-dim conditioning
+                    inject_vals = inject_cond[0, :text_tokens, :dim]
+                    
+                    # Replace (not blend) for stronger effect at high strength
+                    if config.strength > 0.9:
+                        # Direct replacement like in the working test
+                        for b in range(batch):
+                            for h in range(heads):
+                                v_modified[b, h, :text_tokens, :] = inject_vals
+                    else:
+                        # Blend for lower strengths
+                        for b in range(batch):
+                            for h in range(heads):
+                                v_modified[b, h, :text_tokens, :] = \
+                                    v[b, h, :text_tokens, :] * (1 - config.strength) + \
+                                    inject_vals * config.strength
                     
                     return q, k, v_modified
             

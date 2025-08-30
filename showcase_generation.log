@@ -1,0 +1,78 @@
+Traceback (most recent call last):
+  File "/Users/speed/Downloads/corpus-mlx/generate_feature_showcase.py", line 352, in main
+    showcase_advanced_prompt_injection()
+  File "/Users/speed/Downloads/corpus-mlx/generate_feature_showcase.py", line 211, in showcase_advanced_prompt_injection
+    wrapper.add_injection(inject_prompt=injection, **params)
+  File "/Users/speed/Downloads/corpus-mlx/src/corpus_mlx/sd_wrapper_advanced.py", line 62, in add_injection
+    ic = InjectionConfig(**kwargs)
+TypeError: InjectionConfig.__init__() got an unexpected keyword argument 'inject_prompt'
+🎨 GENERATING CORPUS-MLX VISUAL SHOWCASE
+This will create before/after comparisons for all features
+
+============================================================
+SHOWCASE 1: TEXT-LEVEL SEMANTIC REPLACEMENT
+============================================================
+
+Test 1: Apple → Banana
+Prompt: 'a red apple on a wooden table'
+✅ Added replacement: apple -> banana
+🔄 Semantic replacement ENABLED
+✅ Created comparison: showcase_text_1_comparison.png
+⏸️  Semantic replacement DISABLED
+
+Test 2: Cat → Dog
+Prompt: 'a fluffy cat sitting on a sofa'
+✅ Added replacement: cat -> dog
+🔄 Semantic replacement ENABLED
+✅ Created comparison: showcase_text_2_comparison.png
+⏸️  Semantic replacement DISABLED
+
+Test 3: Car → Bicycle
+Prompt: 'a blue car parked on the street'
+✅ Added replacement: car -> bicycle
+🔄 Semantic replacement ENABLED
+✅ Created comparison: showcase_text_3_comparison.png
+⏸️  Semantic replacement DISABLED
+
+Test 4: Laptop → Book
+Prompt: 'a laptop computer on a desk'
+✅ Added replacement: laptop -> book
+🔄 Semantic replacement ENABLED
+✅ Created comparison: showcase_text_4_comparison.png
+⏸️  Semantic replacement DISABLED
+
+============================================================
+SHOWCASE 2: TRUE EMBEDDING INJECTION
+============================================================
+
+Test 1: Cat → Dog (Full)
+Prompt: 'a orange cat playing in a garden' (weight: 1.0)
+💉 Added TRUE embedding injection: cat → golden retriever dog
+   Weight: 1.0, Blocks: ['mid', 'up_0', 'up_1', 'up_2']
+✅ Added TRUE semantic replacement: cat → golden retriever dog
+✅ Created comparison: showcase_embedding_1_comparison.png
+🗑️  Cleared all embedding injections
+
+Test 2: Horse → Cow (Partial)
+Prompt: 'a brown horse in a field' (weight: 0.7)
+💉 Added TRUE embedding injection: horse → cow
+   Weight: 0.7, Blocks: ['mid', 'up_0', 'up_1', 'up_2']
+✅ Added TRUE semantic replacement: horse → cow
+✅ Created comparison: showcase_embedding_2_comparison.png
+🗑️  Cleared all embedding injections
+
+Test 3: Bird → Butterfly (Blend)
+Prompt: 'a small bird on a branch' (weight: 0.5)
+💉 Added TRUE embedding injection: bird → butterfly
+   Weight: 0.5, Blocks: ['mid', 'up_0', 'up_1', 'up_2']
+✅ Added TRUE semantic replacement: bird → butterfly
+✅ Created comparison: showcase_embedding_3_comparison.png
+🗑️  Cleared all embedding injections
+
+============================================================
+SHOWCASE 3: ADVANCED PROMPT INJECTION
+============================================================
+
+Test 1: Time-Windowed
+Base: 'a simple wooden chair' + Injection: 'golden metallic shiny'
+❌ Error during showcase generation: InjectionConfig.__init__() got an unexpected keyword argument 'inject_prompt'

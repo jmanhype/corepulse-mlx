@@ -1,0 +1,15 @@
+SEMANTIC REPLACEMENT TEST RESULTS
+========================================
+
+ 1. apple → banana: SUCCESS
+ 2. orange → lemon: SUCCESS
+ 3. pizza → burger: SUCCESS
+ 4. cat → dog: SUCCESS
+ 5. horse → cow: SUCCESS
+ 6. bird → butterfly: SUCCESS
+ 7. car → bicycle: SUCCESS
+ 8. motorcycle → scooter: SUCCESS
+ 9. airplane → helicopter: SUCCESS
+10. laptop → book: SUCCESS
+11. chair → table: SUCCESS
+12. watch → ring: SUCCESS
