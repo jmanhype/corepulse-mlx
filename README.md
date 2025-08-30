@@ -21,39 +21,52 @@ pip install -e .
 ## 🎨 Visual Feature Gallery
 
 ### Text-Level Semantic Replacement
-Replace objects directly in prompts before tokenization - simple, reliable, 100% effective!
+Replace objects directly in prompts before tokenization:
 
-| Apple → Banana | Cat → Dog |
-|---|---|
-| ![Text Replacement 1](showcase/showcase_text_1_comparison.png) | ![Text Replacement 2](showcase/showcase_text_2_comparison.png) |
-
-| Car → Bicycle | Laptop → Book |
-|---|---|
-| ![Text Replacement 3](showcase/showcase_text_3_comparison.png) | ![Text Replacement 4](showcase/showcase_text_4_comparison.png) |
+| Apple → Banana | Cat → Dog | Car → Bicycle | Laptop → Book |
+|---|---|---|---|
+| ![Text 1](showcase/showcase_text_1_comparison.png) | ![Text 2](showcase/showcase_text_2_comparison.png) | ![Text 3](showcase/showcase_text_3_comparison.png) | ![Text 4](showcase/showcase_text_4_comparison.png) |
 
 ### TRUE Embedding Injection
-Manipulates text conditioning directly - advanced control with complete replacement!
+Advanced semantic replacement with text conditioning manipulation:
+
+#### 🌹 Core Transformations
+| Rose → Sunflower | Cat → Dog | Motorcycle → Car |
+|---|---|---|
+| ![Rose to Sunflower](showcase/fixed_rose_to_sunflower_comparison.png) | ![Cat to Dog](showcase/fixed_cat_to_dog_comparison.png) | ![Motorcycle to Car](showcase/fixed_motorcycle_to_car_comparison.png) |
 
 #### 🐾 Animal Transformations
-| Cat → Dog | Horse → Zebra | Bird → Butterfly |
-|---|---|---|
-| ![Cat to Dog](showcase/showcase_embedding_1_comparison.png) | ![Horse to Zebra](showcase/embedding_horse_to_zebra_comparison.png) | ![Bird to Butterfly](showcase/embedding_bird_to_butterfly_comparison.png) |
+| Horse → Zebra | Bird → Butterfly | Bear → Panda | Sheep → Goat |
+|---|---|---|---|
+| ![Horse to Zebra](showcase/embedding_horse_to_zebra_comparison.png) | ![Bird to Butterfly](showcase/embedding_bird_to_butterfly_comparison.png) | ![Bear to Panda](showcase/embedding_bear_to_panda_comparison.png) | ![Sheep to Goat](showcase/embedding_sheep_to_goat_comparison.png) |
 
-| Sheep → Goat | Bear → Panda |
-|---|---|
-| ![Sheep to Goat](showcase/embedding_sheep_to_goat_comparison.png) | ![Bear to Panda](showcase/embedding_bear_to_panda_comparison.png) |
+#### 🎸 Object Transformations
+| Guitar → Piano | Chair → Sofa | Car → Motorcycle | Bicycle → Scooter |
+|---|---|---|---|
+| ![Guitar to Piano](showcase/embedding_guitar_to_piano_comparison.png) | ![Chair to Sofa](showcase/embedding_chair_to_sofa_comparison.png) | ![Car to Motorcycle](showcase/embedding_car_to_motorcycle_comparison.png) | ![Bicycle to Scooter](showcase/embedding_bicycle_to_scooter_comparison.png) |
 
-#### 🚗 Object Transformations  
-| Car → Motorcycle | Chair → Sofa | Guitar → Piano |
-|---|---|---|
-| ![Car to Motorcycle](showcase/embedding_car_to_motorcycle_comparison.png) | ![Chair to Sofa](showcase/embedding_chair_to_sofa_comparison.png) | ![Guitar to Piano](showcase/embedding_guitar_to_piano_comparison.png) |
-
-#### 🌸 Nature & Food Transformations
+#### 🌳 Nature & Food
 | Oak → Cherry Blossom | Apple → Orange | Pizza → Burger | Sunflower → Rose |
 |---|---|---|---|
 | ![Oak to Cherry](showcase/embedding_oak_to_cherry_blossom_comparison.png) | ![Apple to Orange](showcase/embedding_apple_to_orange_comparison.png) | ![Pizza to Burger](showcase/embedding_pizza_to_burger_comparison.png) | ![Sunflower to Rose](showcase/embedding_sunflower_to_rose_comparison.png) |
 
-**📊 Success Rate: 12/12 examples (100%!)**
+#### 🎬 Animorphs Transformations
+True morphing with consistent scene composition:
+
+| Person → Wolf | Girl → Eagle | Boy → Tiger |
+|---|---|---|
+| ![Person to Wolf](showcase/true_animorphs_person_to_wolf.png) | ![Girl to Eagle](showcase/true_animorphs_girl_to_eagle.png) | ![Boy to Tiger](showcase/true_animorphs_boy_to_tiger.png) |
+
+#### 📽️ Transformation Sequences
+Gradual morphing from human to animal form (0% → 25% → 50% → 75% → 100%):
+
+**Woman → Wolf Sequence**
+![Woman to Wolf Sequence](showcase/animorphs_sequence_woman_to_wolf.png)
+
+**Boy → Hawk Sequence**
+![Boy to Hawk Sequence](showcase/animorphs_sequence_boy_to_hawk.png)
+
+**📊 Success Rate: 20+ working examples with 100% consistency!**
 
 ## Quick Start
 
