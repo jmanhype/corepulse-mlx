@@ -190,7 +190,7 @@ class CorePulse:
         **kwargs
     ):
         """Generate an image with CorePulse enhancements.
-        
+
         Args:
             prompt: Main text prompt
             negative_prompt: Negative prompt
@@ -200,40 +200,69 @@ class CorePulse:
             width: Image width
             height: Image height
             **kwargs: Additional generation parameters
-            
+
         Returns:
             Generated image(s)
+
+        Raises:
+            ValueError: If model is not set or parameters are invalid
+            RuntimeError: If generation fails
         """
         if not self.model:
             raise ValueError("No model set. Call set_model() first.")
-            
-        # Install hooks if not already done
-        if not self._hooks_installed:
-            self.install_hooks()
-            
-        # Reset step counter
-        self.injector.reset()
-        
-        # Generate regional mask if needed
-        if self.regional_control.regions:
-            self._current_mask = self.regional_control.create_composite_mask(
-                height // 8,  # Latent space dimensions
-                width // 8
+
+        # Validate parameters
+        if width % 8 != 0 or height % 8 != 0:
+            raise ValueError(f"Width and height must be divisible by 8, got {width}x{height}")
+
+        if num_inference_steps < 1:
+            raise ValueError(f"num_inference_steps must be >= 1, got {num_inference_steps}")
+
+        try:
+            # Install hooks if not already done
+            if not self._hooks_installed:
+                self.install_hooks()
+
+            # Reset step counter
+            if self.injector:
+                self.injector.reset()
+
+            # Generate regional mask if needed
+            if self.regional_control.regions:
+                try:
+                    self._current_mask = self.regional_control.create_composite_mask(
+                        height // 8,  # Latent space dimensions
+                        width // 8
+                    )
+                except Exception as e:
+                    import warnings
+                    warnings.warn(
+                        f"Failed to create regional mask: {e}. Proceeding without regional control.",
+                        RuntimeWarning
+                    )
+                    self._current_mask = None
+
+            # Generate with base model
+            result = self.model.generate(
+                prompt=prompt,
+                negative_prompt=negative_prompt,
+                num_inference_steps=num_inference_steps,
+                guidance_scale=guidance_scale,
+                seed=seed,
+                width=width,
+                height=height,
+                **kwargs
             )
-            
-        # Generate with base model
-        result = self.model.generate(
-            prompt=prompt,
-            negative_prompt=negative_prompt,
-            num_inference_steps=num_inference_steps,
-            guidance_scale=guidance_scale,
-            seed=seed,
-            width=width,
-            height=height,
-            **kwargs
-        )
-        
-        return result
+
+            return result
+
+        except Exception as e:
+            # Re-raise with more context
+            raise RuntimeError(
+                f"Image generation failed: {e}. "
+                f"Parameters: prompt='{prompt[:50]}...', steps={num_inference_steps}, "
+                f"size={width}x{height}"
+            ) from e
         
     def clear(self):
         """Clear all injections and settings."""

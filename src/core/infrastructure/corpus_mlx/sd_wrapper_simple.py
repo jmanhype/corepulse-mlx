@@ -29,13 +29,34 @@ class CorePulseStableDiffusion:
             self.dtype = mx.float16
 
     def add_injection(self, **kwargs) -> InjectionConfig:
+        """Add a new injection configuration.
+
+        Args:
+            **kwargs: Arguments passed to InjectionConfig constructor
+                     (e.g., prompt, weight, start_frac, end_frac)
+
+        Returns:
+            The created InjectionConfig instance
+        """
         ic = InjectionConfig(**kwargs)
         self.injections.append(ic)
         return ic
 
-    def clear_injections(self): self.injections.clear()
-    def add_pre_step_hook(self, fn): self.pre_step_hooks.append(fn)
-    def clear_pre_step_hooks(self): self.pre_step_hooks.clear()
+    def clear_injections(self):
+        """Remove all registered injections."""
+        self.injections.clear()
+
+    def add_pre_step_hook(self, fn):
+        """Add a pre-step hook function.
+
+        Args:
+            fn: Callable with signature (i, progress, x_t) -> x_t
+        """
+        self.pre_step_hooks.append(fn)
+
+    def clear_pre_step_hooks(self):
+        """Remove all pre-step hooks."""
+        self.pre_step_hooks.clear()
 
     def generate_latents(
         self,
@@ -64,7 +85,8 @@ class CorePulseStableDiffusion:
                 seed=seed,
             )
         else:
-            # TODO: Implement injection logic
+            # TODO: Implement injection logic - need to hook into UNet forward pass
+            # to blend injection embeddings at appropriate timesteps
             latent_size = (height // 8, width // 8)
             yield from self.sd.generate_latents(
                 base_prompt,

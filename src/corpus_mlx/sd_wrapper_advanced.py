@@ -214,7 +214,7 @@ class CorePulseStableDiffusion:
             y1, y2 = y1 // self.latent_scale, y2 // self.latent_scale
             mask = mx.zeros((H, W))
             mask[y1:y2, x1:x2] = 1.0
-            # TODO: Add feathering
+            # TODO: Add feathering around region edges for smoother blending
             return mask
         return None
     
