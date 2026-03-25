@@ -1,16 +1,29 @@
-# corpus-mlx
+# corepulse-mlx
 
-CorePulse V4 DataVoid implementation for MLX/Apple Silicon - Advanced Stable Diffusion with semantic object replacement, prompt injection, and attention manipulation.
+Attention manipulation toolkit for Stable Diffusion on Apple Silicon (MLX). Implements prompt injection, semantic object replacement, and attention control techniques from the CorePulse V4/DataVoid research.
 
-## 🎵 SHOW ME WHAT YOU GOT! 🎵
+## Status
 
-*"I LIKE WHAT YOU GOT... GOOD JOB!"* - The Cromulons
+**Experimental.** Text-level semantic replacement works. Embedding-level injection is partially implemented -- attention hooks fire during generation but do not yet override semantic content from the text encoder. See "Known limitations" below.
 
-## 🚀 NEW: Semantic Object Replacement
+## What it does
 
-Transform objects in your prompts! Apple becomes banana, cat becomes dog - true object replacement at the text level.
+| Technique | Mechanism | Status |
+|---|---|---|
+| Text-level semantic replacement | String substitution before tokenization (apple -> banana) | Working |
+| Embedding injection | Blends replacement embeddings into text conditioning tensors | Working (12+ categories tested) |
+| Time-windowed prompt injection | Applies secondary prompts during specific diffusion timestep ranges | Working |
+| Regional prompt injection | Restricts injection to spatial regions of the latent | Working |
+| Token-masked injection | Targets injection at specific token indices | Working |
+| Attention chaos/suppress/amplify/invert | Manipulates cross-attention values (V) directly | Working |
+| Cross-attention swapping | Swaps attention maps between prompts | Not working |
+| Regional spatial control | Fine-grained region-to-prompt mapping | Not working |
 
-**Note:** Our approach differs from CorePulse - we do text-level replacement (before tokenization) while CorePulse does embedding-level injection (during UNet forward pass). Both achieve semantic replacement through different mechanisms. See [TECHNICAL_COMPARISON.md](TECHNICAL_COMPARISON.md) for details.
+## Requirements
+
+- Python >= 3.9
+- Apple Silicon Mac (MLX backend) or CUDA GPU (PyTorch backend)
+- `diffusers`, `transformers`, `accelerate`, `safetensors`, `Pillow`, `matplotlib`
 
 ## Installation
 
@@ -18,222 +31,68 @@ Transform objects in your prompts! Apple becomes banana, cat becomes dog - true 
 pip install -e .
 ```
 
-## 🎨 Visual Feature Gallery
+## Usage
 
-### Text-Level Semantic Replacement
-Replace objects directly in prompts before tokenization:
+### Text-level replacement
 
-| Apple → Banana | Cat → Dog | Car → Bicycle | Laptop → Book |
-|---|---|---|---|
-| ![Text 1](showcase/showcase_text_1_comparison.png) | ![Text 2](showcase/showcase_text_2_comparison.png) | ![Text 3](showcase/showcase_text_3_comparison.png) | ![Text 4](showcase/showcase_text_4_comparison.png) |
-
-### TRUE Embedding Injection
-Advanced semantic replacement with text conditioning manipulation:
-
-#### 🌹 Core Transformations
-| Rose → Sunflower | Cat → Dog | Motorcycle → Car |
-|---|---|---|
-| ![Rose to Sunflower](showcase/fixed_rose_to_sunflower_comparison.png) | ![Cat to Dog](showcase/fixed_cat_to_dog_comparison.png) | ![Motorcycle to Car](showcase/fixed_motorcycle_to_car_comparison.png) |
-
-#### 🐾 Animal Transformations
-| Horse → Zebra | Bird → Butterfly | Bear → Panda | Sheep → Goat |
-|---|---|---|---|
-| ![Horse to Zebra](showcase/embedding_horse_to_zebra_comparison.png) | ![Bird to Butterfly](showcase/embedding_bird_to_butterfly_comparison.png) | ![Bear to Panda](showcase/embedding_bear_to_panda_comparison.png) | ![Sheep to Goat](showcase/embedding_sheep_to_goat_comparison.png) |
-
-#### 🎸 Object Transformations
-| Guitar → Piano | Chair → Sofa | Car → Motorcycle | Bicycle → Scooter |
-|---|---|---|---|
-| ![Guitar to Piano](showcase/embedding_guitar_to_piano_comparison.png) | ![Chair to Sofa](showcase/embedding_chair_to_sofa_comparison.png) | ![Car to Motorcycle](showcase/embedding_car_to_motorcycle_comparison.png) | ![Bicycle to Scooter](showcase/embedding_bicycle_to_scooter_comparison.png) |
-
-#### 🌳 Nature & Food
-| Oak → Cherry Blossom | Apple → Orange | Pizza → Burger | Sunflower → Rose |
-|---|---|---|---|
-| ![Oak to Cherry](showcase/embedding_oak_to_cherry_blossom_comparison.png) | ![Apple to Orange](showcase/embedding_apple_to_orange_comparison.png) | ![Pizza to Burger](showcase/embedding_pizza_to_burger_comparison.png) | ![Sunflower to Rose](showcase/embedding_sunflower_to_rose_comparison.png) |
-
-#### 🎬 Animorphs Transformations
-True morphing with consistent scene composition:
-
-| Person → Wolf | Girl → Eagle | Boy → Tiger |
-|---|---|---|
-| ![Person to Wolf](showcase/true_animorphs_person_to_wolf.png) | ![Girl to Eagle](showcase/true_animorphs_girl_to_eagle.png) | ![Boy to Tiger](showcase/true_animorphs_boy_to_tiger.png) |
-
-#### 📽️ Transformation Sequences
-Gradual morphing from human to animal form (0% → 25% → 50% → 75% → 100%):
-
-**Woman → Wolf Sequence**
-![Woman to Wolf Sequence](showcase/animorphs_sequence_woman_to_wolf.png)
-
-**Boy → Hawk Sequence**
-![Boy to Hawk Sequence](showcase/animorphs_sequence_boy_to_hawk.png)
-
-**📊 Success Rate: 20+ working examples with 100% consistency!**
-
-## Quick Start
-
-### 🔄 Semantic Object Replacement (NEW!)
-
-#### Text-Level Replacement (Simple & Reliable)
 ```python
 from corpus_mlx import create_semantic_wrapper
 
-# Create wrapper
 wrapper = create_semantic_wrapper("stabilityai/stable-diffusion-2-1-base")
-
-# Replace objects in prompts!
 wrapper.add_replacement("apple", "banana")
 wrapper.add_replacement("cat", "dog")
 wrapper.enable()
 
-# Generates banana instead of apple!
 latents = wrapper.wrapper.generate_latents("a photo of an apple")
+# Generates banana instead of apple
 ```
 
-#### TRUE Embedding Injection (Advanced Control)
+### Embedding injection
+
 ```python
 from corpus_mlx import create_true_semantic_wrapper
 
-# Create TRUE semantic wrapper
 wrapper = create_true_semantic_wrapper("stabilityai/stable-diffusion-2-1-base")
-
-# Add replacement with weight control
-wrapper.add_replacement("cat", "golden retriever dog", weight=0.7)  # 70% blend
+wrapper.add_replacement("cat", "golden retriever dog", weight=0.7)
 wrapper.injector.enable_for_prompt("a fluffy cat in a garden")
 
-# Generate with embedding injection
 latents = wrapper.sd.generate_latents("a fluffy cat in a garden")
 ```
 
-### 💉 Advanced Prompt Injection
-
-```python
-from corpus_mlx import CorePulseStableDiffusion
-
-# Create advanced wrapper
-sd = CorePulseStableDiffusion("stabilityai/stable-diffusion-2-1-base")
-
-# Time-windowed injection
-sd.add_injection(
-    prompt="ethereal glowing",
-    weight=0.5,
-    start_time=0.3,  # Start at 30% of generation
-    end_time=0.7     # End at 70%
-)
-
-# Regional injection
-sd.add_injection(
-    prompt="golden metallic",
-    weight=0.4,
-    region=(0.25, 0.25, 0.75, 0.75)  # Center region only
-)
-
-# Token-masked injection
-sd.add_injection(
-    prompt="cyberpunk neon",
-    weight=0.6,
-    token_indices=[0, 1, 2]  # Apply to specific tokens
-)
-```
-
-### 🌀 CorePulse Attention Manipulation
+### Attention manipulation
 
 ```python
 from corpus_mlx import CorePulse
 from stable_diffusion import StableDiffusionXL
 
-# Load model
 model = StableDiffusionXL("stabilityai/sdxl-turbo", float16=True)
-
-# Create CorePulse wrapper
 corepulse = CorePulse(model)
 
-# These work great! ✅
-corepulse.chaos(intensity=2.0)        # Real chaos injection
-corepulse.suppress(factor=0.05)       # 95% reduction - dramatic changes
-corepulse.amplify(strength=10.0)      # 10x amplification - abstract art
-corepulse.invert()                    # Anti-prompt - gray void
+corepulse.chaos(intensity=2.0)
+corepulse.suppress(factor=0.05)
+corepulse.amplify(strength=10.0)
+corepulse.invert()
 ```
 
-## Features
+## Known limitations
 
-### ✅ FULLY WORKING
+1. **Semantic prompt override does not work.** Modifying attention values (V) is insufficient to override the text encoder's conditioning. True prompt injection requires replacing conditioning at the encoder level, not blending attention values.
+2. **Cross-attention swapping** is stubbed but not functional.
+3. **Regional control** is not properly wired to spatial masks.
+4. The codebase carries some artifacts from earlier CorePulse iterations (configs, logs, demo scripts) that have not been cleaned up.
 
-#### Semantic Object Replacement (NEW!)
-- **Text-level replacement** - Simple, reliable, 100% success rate (Apple→Banana, Cat→Dog, Car→Bicycle, Laptop→Book)
-- **TRUE embedding injection** - Advanced text conditioning manipulation, 100% success rate across 12+ categories
-- **Incredible variety** - Animals (Horse→Zebra), Objects (Guitar→Piano), Nature (Oak→Cherry Blossom), Food (Pizza→Burger) 
-- **Complete transformations** - Not just similar objects, but entirely different categories work perfectly
-- **Seamless integration** - Works with all other corpus-mlx features
+## Project structure
 
-#### Advanced Prompt Injection
-- **Time-windowed injection** - Apply prompts during specific generation phases
-- **Regional injection** - Inject prompts in specific image regions
-- **Token-masked injection** - Target specific tokens in the prompt
-- **Multi-block targeting** - Control which UNet blocks get injections
-- **Dynamic strength** - Adjust injection strength per block
-
-#### CorePulse Attention Manipulation
-- **Chaos injection** - Adds real distortion and noise patterns
-- **Suppression** - Dramatically changes images (skeletal/organic effects)
-- **Amplification** - Creates abstract artistic patterns
-- **Inversion** - Produces anti-images (negative space)
-- **Token removal** - Removes specific tokens from attention
-- **Progressive strength** - Gradual effects across blocks
-- **Head isolation** - Isolates specific attention heads
-
-## Examples
-
-### Run Example Scripts
-
-```bash
-# Basic semantic replacement
-python examples/01_basic_semantic_replacement.py
-
-# Generate comparison images
-python examples/02_comparison_generation.py
-
-# Multiple replacements
-python examples/03_multiple_replacements.py
-
-# Combined features
-python examples/04_combined_with_injection.py
+```
+CorePulse/
+  core_pulse/
+    models/          # UNet patcher, base model wrappers
+    prompt_injection/ # Injection strategies (base, advanced, spatial, attention, masking)
+    utils/           # Helpers, logger, tokenizer
+  tests/             # Unit tests for injection and model modules
+  pyproject.toml
 ```
 
-### Test Results
+## License
 
-Successfully tested semantic replacement on:
-- **Food**: apple→banana, orange→lemon, pizza→burger
-- **Animals**: cat→dog, horse→cow, bird→butterfly
-- **Vehicles**: car→bicycle, motorcycle→scooter, airplane→helicopter
-- **Objects**: laptop→book, chair→table, watch→ring
-
-All tests: **100% success rate** ✅
-
-### 🚧 NOT WORKING YET
-- **Regional control** - Not properly implemented
-- **Cross-attention swapping** - Needs fixing
-- **Semantic prompt override** - Injecting different objects (banana instead of apple) doesn't work
-
-## Rick and Morty Examples
-
-Check out `examples/` for Rick and Morty themed demos:
-- `01_get_schwifty.py` - Progressive chaos (actually works!)
-- `02_portal_gun.py` - Interdimensional travel (all dimensions look the same 😅)
-- `03_pickle_rick.py` - Transformation demo
-- `04_meeseeks.py` - Attention head variants
-- `05_plumbus.py` - Manufacturing process
-
-## The Truth
-
-We refactored everything to be clean (Uncle Bob approved!), fixed the KV hooks connection issue, and the manipulation techniques (chaos, suppress, amplify) work great! Prompt injection hooks ARE being called (hundreds of times per generation) but semantic replacement still doesn't work - you can't turn an apple into a banana yet.
-
-The problem: We're modifying attention values (V) but that's not enough to override the semantic content from the text encoder. True prompt injection would need to replace the conditioning at the encoder level, not just blend attention values.
-
-*Wubba lubba dub dub!* (I am in great pain, please help me... fix the injection)
-
-## Documentation
-
-See `docs/` for detailed documentation (if you trust it after reading this README).
-
-## Contributing
-
-Feel free to fix the injection system if you figure it out! The hooks are connected, but something's still not right.
+See LICENSE file in the repository root.
