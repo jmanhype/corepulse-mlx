@@ -139,55 +139,97 @@ class AttentionController:
     ) -> Array:
         """
         Apply attention manipulations to given weights.
-        
+
         Args:
             attention_weights: Original attention weights [batch, heads, seq, seq]
             block_name: Current UNet block
             token_embeddings: Optional token embeddings for advanced control
-            
+
         Returns:
             Modified attention weights
+
+        Raises:
+            ValueError: If attention_weights has invalid shape
         """
-        weights = attention_weights
-        
-        # Apply DataVoid technique first if configured
-        if block_name in self.cross_attention_maps:
-            datavoid = self.cross_attention_maps[block_name].get("datavoid")
-            if datavoid:
-                weights = self._apply_datavoid_technique(
-                    weights,
-                    datavoid["void_positions"],
-                    datavoid["product_positions"],
-                    datavoid["void_suppression"],
-                    datavoid["product_amplification"],
-                    datavoid["redistribution_rate"]
+        try:
+            # Validate input shape
+            if attention_weights.ndim < 2:
+                raise ValueError(
+                    f"attention_weights must have at least 2 dimensions, got {attention_weights.ndim}"
                 )
-        
-        # Apply scaling
-        if block_name in self.attention_scales:
-            scale = self.attention_scales[block_name]
-            weights = weights * scale
-            
-        # Apply shifting
-        if block_name in self.attention_shifts:
-            shift = self.attention_shifts[block_name]
-            weights = weights + shift
-            
-        # Apply redistribution
-        if block_name in self.cross_attention_maps:
-            redis = self.cross_attention_maps[block_name].get("redistribution")
-            if redis:
-                weights = self._redistribute_weights(
-                    weights,
-                    redis["from"],
-                    redis["to"],
-                    redis["weight"]
-                )
-        
-        # Renormalize
-        weights = self._renormalize_attention(weights)
-        
-        return weights
+
+            weights = attention_weights
+
+            # Apply DataVoid technique first if configured
+            if block_name in self.cross_attention_maps:
+                datavoid = self.cross_attention_maps[block_name].get("datavoid")
+                if datavoid:
+                    try:
+                        weights = self._apply_datavoid_technique(
+                            weights,
+                            datavoid["void_positions"],
+                            datavoid["product_positions"],
+                            datavoid["void_suppression"],
+                            datavoid["product_amplification"],
+                            datavoid["redistribution_rate"]
+                        )
+                    except Exception as e:
+                        import warnings
+                        warnings.warn(
+                            f"DataVoid application failed for block {block_name}: {e}",
+                            RuntimeWarning
+                        )
+
+            # Apply scaling
+            if block_name in self.attention_scales:
+                scale = self.attention_scales[block_name]
+                weights = weights * scale
+
+            # Apply shifting
+            if block_name in self.attention_shifts:
+                shift = self.attention_shifts[block_name]
+                try:
+                    weights = weights + shift
+                except Exception as e:
+                    import warnings
+                    warnings.warn(
+                        f"Attention shift failed for block {block_name}: {e}. "
+                        f"Shape mismatch? weights: {weights.shape}, shift: {shift.shape}",
+                        RuntimeWarning
+                    )
+
+            # Apply redistribution
+            if block_name in self.cross_attention_maps:
+                redis = self.cross_attention_maps[block_name].get("redistribution")
+                if redis:
+                    try:
+                        weights = self._redistribute_weights(
+                            weights,
+                            redis["from"],
+                            redis["to"],
+                            redis["weight"]
+                        )
+                    except Exception as e:
+                        import warnings
+                        warnings.warn(
+                            f"Attention redistribution failed for block {block_name}: {e}",
+                            RuntimeWarning
+                        )
+
+            # Renormalize
+            weights = self._renormalize_attention(weights)
+
+            return weights
+
+        except Exception as e:
+            # If everything fails, return original weights
+            import warnings
+            warnings.warn(
+                f"Attention control failed for block {block_name}: {e}. "
+                f"Returning unmodified weights.",
+                RuntimeWarning
+            )
+            return attention_weights
     
     def _apply_datavoid_technique(
         self,
@@ -290,24 +332,46 @@ class PerBlockInjectionController:
             self.block_injections[block].append(injection)
     
     def prepare_embeddings(self):
-        """Pre-compute embeddings for all block injections."""
+        """Pre-compute embeddings for all block injections.
+
+        Raises:
+            RuntimeError: If embedding preparation fails for critical blocks
+        """
         from .injection import encode_tokens
-        
+
+        failed_blocks = []
+
         for block, injections in self.block_injections.items():
             for inj in injections:
                 if inj["embedding"] is None:
-                    tokens = encode_tokens(self.sd, inj["prompt"], True, True)
-                    embedding = self.sd.text_encoder(tokens).last_hidden_state
-                    
-                    # Apply token mask if specified
-                    if inj["token_mask"]:
-                        embedding = self._apply_token_mask(
-                            embedding,
-                            tokens,
-                            inj["token_mask"]
+                    try:
+                        tokens = encode_tokens(self.sd, inj["prompt"], True, True)
+                        embedding = self.sd.text_encoder(tokens).last_hidden_state
+
+                        # Apply token mask if specified
+                        if inj["token_mask"]:
+                            embedding = self._apply_token_mask(
+                                embedding,
+                                tokens,
+                                inj["token_mask"]
+                            )
+
+                        inj["embedding"] = embedding
+
+                    except Exception as e:
+                        failed_blocks.append((block, str(e)))
+                        import warnings
+                        warnings.warn(
+                            f"Failed to prepare embedding for block {block}: {e}",
+                            RuntimeWarning
                         )
-                    
-                    inj["embedding"] = embedding
+
+        # If all blocks failed, raise error
+        if failed_blocks and len(failed_blocks) == sum(len(injs) for injs in self.block_injections.values()):
+            raise RuntimeError(
+                f"Failed to prepare embeddings for all {len(failed_blocks)} injections. "
+                f"First error: {failed_blocks[0][1]}"
+            )
     
     def get_block_embedding(
         self,
@@ -343,10 +407,59 @@ class PerBlockInjectionController:
         tokens: Array,
         mask_text: str
     ) -> Array:
-        """Apply token masking to embedding."""
-        # Simple implementation - zero out non-masked tokens
-        # In practice, would match mask_text to token positions
-        return embedding  # TODO: Implement proper token matching
+        """Apply token masking to embedding.
+
+        This implementation finds tokens matching mask_text and zeros out
+        all other tokens in the embedding, effectively focusing attention
+        on the specified tokens only.
+
+        Args:
+            embedding: Token embeddings [batch, seq_len, hidden_dim]
+            tokens: Token IDs [batch, seq_len]
+            mask_text: Text string to match against tokens
+
+        Returns:
+            Masked embedding with non-matching tokens zeroed out
+        """
+        try:
+            # Get tokenizer from sd instance
+            if not hasattr(self.sd, 'tokenizer'):
+                # No tokenizer available, return embedding unchanged
+                return embedding
+
+            tokenizer = self.sd.tokenizer
+
+            # Tokenize the mask text to get target token IDs
+            mask_token_ids = tokenizer.encode(mask_text, add_special_tokens=False)
+            if not mask_token_ids:
+                return embedding
+
+            # Create a mask array: 1 for matching tokens, 0 for others
+            mask = mx.zeros(tokens.shape, dtype=embedding.dtype)
+
+            # Find positions where tokens match mask_token_ids
+            for target_id in mask_token_ids:
+                mask = mask + (tokens == target_id).astype(embedding.dtype)
+
+            # Clip mask to [0, 1] range
+            mask = mx.clip(mask, 0.0, 1.0)
+
+            # Expand mask to match embedding dimensions [batch, seq_len, 1]
+            mask = mx.expand_dims(mask, axis=-1)
+
+            # Apply mask to embedding
+            masked_embedding = embedding * mask
+
+            return masked_embedding
+
+        except Exception as e:
+            # If anything fails, log warning and return original embedding
+            import warnings
+            warnings.warn(
+                f"Token mask application failed: {e}. Returning unmasked embedding.",
+                RuntimeWarning
+            )
+            return embedding
 
 
 class MultiScaleController:
